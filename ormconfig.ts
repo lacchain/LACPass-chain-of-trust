@@ -14,6 +14,7 @@ import {
   log4TSProvider
 } from '@config';
 
+// TODO: import Secp256k1Entity from key-manager
 import { DidEntity, Secp256k1Entity } from 'lacpass-identity';
 
 const log = log4TSProvider.getLogger('ormConfig');

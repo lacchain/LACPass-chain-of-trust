@@ -22,7 +22,13 @@ export enum ErrorsMessages {
   CREATE_DID_ERROR = 'An internal server error occurred while trying to create a new did',
   GET_DID_CONTROLLER_ERROR = 'Error while trying to get did controller',
   DECODE_DID_CONTROLLER_ERROR = 'Error while decoding did',
-  ADD_ATTRIBUTE_ERROR = 'Error while associating attribute to did'
+  ADD_ATTRIBUTE_ERROR = 'Error while associating attribute to did',
+  // eslint-disable-next-line max-len
+  CREATE_NEW_ONCHAIN_DELEGATE_ERROR = 'An error occurred while trying to create a new onchain delagate',
+
+  // eslint-disable-next-line max-len
+  MANAGER_ALREADY_EXISTIS = 'A manager already exists for the entity Did, please remove it before creating a new one',
+  MANAGER_DOES_NOT_EXIST = 'A manager does not exist for the Entity Did passed in'
 }
 
 export const Errors = {
