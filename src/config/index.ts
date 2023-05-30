@@ -5,7 +5,7 @@ import { Log4TSProvider } from 'typescript-logging-log4ts-style';
 config({ path: `.env.${process.env.ENV || 'dev'}` });
 
 export const log4TSProvider = Log4TSProvider.createProvider(
-  'Log4ProviderVerificationRegistry',
+  'Log4ProviderChainOfTrust',
   {
     level: LogLevel.Debug,
     groups: [

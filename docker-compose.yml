@@ -44,7 +44,7 @@ services:
     ports:
       - '${EXPOSED_CONTAINER_SERVER_PORT}:${PORT}'
     restart: on-failure
-    container_name: laccpass-verification-registry
+    container_name: laccpass-chain-of-trust
     depends_on:
       - postgres
       - redis
