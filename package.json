@@ -1,7 +1,7 @@
 {
-  "name": "laccpass-verification-registry",
+  "name": "laccpass-chain-of-trust",
   "version": "0.0.1",
-  "description": "Rest api for laccpass Verification Registry",
+  "description": "Rest api for laccpass Chain Of Trust built on top of Lacchain",
   "license": "MIT",
   "scripts": {
     "dev": "yarn && nodemon --watch 'src/**/*.ts' --exec 'ENV=dev ts-node -r tsconfig-paths/register' src/server.ts",

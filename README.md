@@ -1,4 +1,4 @@
-# LACPass Verification Registry
+# LACPass Chain Of Trust
 
 ## Getting Started
 
