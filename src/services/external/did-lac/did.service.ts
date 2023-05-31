@@ -1,8 +1,9 @@
 import {
   DID_LAC1,
   IDENTITY_MANAGER_BASE_URL,
-  IS_DEPENDENT_SERVICE,
-  log4TSProvider
+  COT_IS_DEPENDENT_SERVICE,
+  log4TSProvider,
+  DID_LAC1_ADD_NEW_ETHEREUM_ACCOUNT_ATTRIBUTE
 } from '../../../config';
 import { ErrorsMessages } from '../../../constants/errorMessages';
 import {
@@ -26,7 +27,7 @@ export class DidServiceLac1 {
   private didService: DidLacService | null;
 
   constructor() {
-    if (IS_DEPENDENT_SERVICE !== 'true') {
+    if (COT_IS_DEPENDENT_SERVICE !== 'true') {
       this.log.info('Configuring identity-manager library usage');
       this.createDid = this.createDidByLib;
       this.addNewEthereumAccountIdAttribute =
@@ -77,13 +78,16 @@ export class DidServiceLac1 {
   private async addNewEthereumAccountIdAttributeByExternalService(
     newAccountIdAttribute: INewAccountIdAttribute
   ): Promise<INewDelegateResponse> {
-    const result = await fetch(`${IDENTITY_MANAGER_BASE_URL}${DID_LAC1}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newAccountIdAttribute)
-    });
+    const result = await fetch(
+      `${IDENTITY_MANAGER_BASE_URL}${DID_LAC1_ADD_NEW_ETHEREUM_ACCOUNT_ATTRIBUTE}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newAccountIdAttribute)
+      }
+    );
     console.log('status', result.status);
     if (result.status !== 200) {
       console.log(await result.text());
