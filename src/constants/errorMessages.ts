@@ -24,7 +24,7 @@ export enum ErrorsMessages {
   DECODE_DID_CONTROLLER_ERROR = 'Error while decoding did',
   ADD_ATTRIBUTE_ERROR = 'Error while associating attribute to did',
   // eslint-disable-next-line max-len
-  CREATE_NEW_ONCHAIN_DELEGATE_ERROR = 'An error occurred while trying to create a new onchain delagate',
+  CREATE_NEW_DELEGATE_ERROR = 'An error occurred while trying to create a new delagate',
 
   // eslint-disable-next-line max-len
   MANAGER_ALREADY_EXISTIS = 'A manager already exists for the entity Did, please remove it before creating a new one',

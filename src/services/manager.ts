@@ -1,7 +1,7 @@
 import { IManager, IManagerService } from 'src/interfaces/manager/manager';
 import { Service } from 'typedi';
 import { DidServiceLac1 } from './external/did-lac/did.service';
-import { INewOnchainDelegate } from 'lacpass-identity';
+import { INewAccountIdAttribute } from 'lacpass-identity';
 import { getRepository } from 'typeorm';
 import { Manager } from '../entities/manager.entity';
 import { BadRequestError, NotFoundError } from 'routing-controllers';
@@ -34,22 +34,23 @@ export class ManagerService implements IManagerService {
     throw new Error('Method not implemented.');
   }
   async createManager(
-    newOnchainDelegate: INewOnchainDelegate
+    newAccountIdAttribute: INewAccountIdAttribute
   ): Promise<IManager> {
     const existManager = await this.managerRepository.findOne(undefined, {
       where: {
-        entityDid: newOnchainDelegate.did
+        entityDid: newAccountIdAttribute.did
       }
     });
     if (existManager) {
       const message = ErrorsMessages.MANAGER_ALREADY_EXISTIS;
       throw new BadRequestError(message);
     }
-    const newManager = await this.didServiceLac1.createNewOnchainDelegate(
-      newOnchainDelegate
-    );
+    const newManager =
+      await this.didServiceLac1.addNewEthereumAccountIdAttribute(
+        newAccountIdAttribute
+      );
     const managerToSave: IManager = {
-      entityDid: newOnchainDelegate.did,
+      entityDid: newAccountIdAttribute.did,
       managerDid: newManager.delegateDid,
       managerAddress: newManager.delegateAddress
     };

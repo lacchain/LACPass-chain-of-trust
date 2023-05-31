@@ -8,9 +8,9 @@ import {
 } from 'routing-controllers';
 import { Service } from 'typedi';
 import { ErrorsMessages } from '@constants/errorMessages';
-import { NewOnchainDelegateDTO } from 'lacpass-identity';
 import { ManagerService } from '@services/manager';
 import { IManager } from 'src/interfaces/manager/manager';
+import { NewAccountIdAttributeDTO } from 'lacpass-identity';
 
 @JsonController('/manager')
 @Service()
@@ -19,7 +19,7 @@ export class ManagerController {
 
   @Post()
   async createManager(
-    @Body({ validate: true }) delegate: NewOnchainDelegateDTO
+    @Body({ validate: true }) delegate: NewAccountIdAttributeDTO
   ): Promise<any> {
     try {
       return this.managerService.createManager(delegate);

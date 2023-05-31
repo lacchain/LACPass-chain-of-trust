@@ -8,8 +8,8 @@ import { ErrorsMessages } from '../../../constants/errorMessages';
 import {
   DidLacService,
   DidType,
-  INewOnchainDelegate,
-  INewOnchainDelegateResponse
+  INewAccountIdAttribute,
+  INewDelegateResponse
 } from 'lacpass-identity';
 import { InternalServerError } from 'routing-controllers';
 import { Service } from 'typedi';
@@ -18,9 +18,9 @@ import fetch from 'node-fetch';
 @Service()
 export class DidServiceLac1 {
   public createDid: () => Promise<DidType>;
-  public createNewOnchainDelegate: (
-    newOnchainDelegate: INewOnchainDelegate
-  ) => Promise<INewOnchainDelegateResponse>;
+  public addNewEthereumAccountIdAttribute: (
+    newAccountIdAttribute: INewAccountIdAttribute
+  ) => Promise<INewDelegateResponse>;
   log = log4TSProvider.getLogger('IdentityManagerService');
 
   private didService: DidLacService | null;
@@ -29,15 +29,16 @@ export class DidServiceLac1 {
     if (IS_DEPENDENT_SERVICE !== 'true') {
       this.log.info('Configuring identity-manager library usage');
       this.createDid = this.createDidByLib;
-      this.createNewOnchainDelegate = this.createNewOnchainDelegateByLib;
+      this.addNewEthereumAccountIdAttribute =
+        this.addNewEthereumAccountIdAttributeByLib;
 
       // setting imported did service
       const S = require('lacpass-identity').DidLac1Service;
       this.didService = new S();
     } else {
       this.log.info('Configuring identity-manager external service connection');
-      this.createNewOnchainDelegate =
-        this.createNewOnchainDelegateByExternalService;
+      this.addNewEthereumAccountIdAttribute =
+        this.addNewEthereumAccountIdAttributeByExternalService;
       this.createDid = this.createDidByExternalService;
 
       // setting did service to null since connections will be made by way
@@ -65,31 +66,29 @@ export class DidServiceLac1 {
     return (await result.json()) as DidType;
   }
 
-  private async createNewOnchainDelegateByLib(
-    newOnchainDelegate: INewOnchainDelegate
-  ): Promise<INewOnchainDelegateResponse> {
-    return (await this.didService?.createNewOnchainDelegate(
-      newOnchainDelegate
-    )) as INewOnchainDelegateResponse;
+  private async addNewEthereumAccountIdAttributeByLib(
+    newAccountIdAttribute: INewAccountIdAttribute
+  ): Promise<INewDelegateResponse> {
+    return (await this.didService?.addNewEthereumAccountIdAttribute(
+      newAccountIdAttribute
+    )) as INewDelegateResponse;
   }
 
-  private async createNewOnchainDelegateByExternalService(
-    newOnchainDelegate: INewOnchainDelegate
-  ): Promise<INewOnchainDelegateResponse> {
+  private async addNewEthereumAccountIdAttributeByExternalService(
+    newAccountIdAttribute: INewAccountIdAttribute
+  ): Promise<INewDelegateResponse> {
     const result = await fetch(`${IDENTITY_MANAGER_BASE_URL}${DID_LAC1}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newOnchainDelegate)
+      body: JSON.stringify(newAccountIdAttribute)
     });
     console.log('status', result.status);
     if (result.status !== 200) {
       console.log(await result.text());
-      throw new InternalServerError(
-        ErrorsMessages.CREATE_NEW_ONCHAIN_DELEGATE_ERROR
-      );
+      throw new InternalServerError(ErrorsMessages.CREATE_NEW_DELEGATE_ERROR);
     }
-    return (await result.json()) as INewOnchainDelegateResponse;
+    return (await result.json()) as INewDelegateResponse;
   }
 }
