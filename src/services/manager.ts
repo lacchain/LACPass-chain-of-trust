@@ -15,7 +15,10 @@ import { EntityMapper } from '../clients/mapper/entityMapper.service';
 @Service()
 export class ManagerService implements IManagerService {
   private readonly managerRepository = getRepository<Manager>(Manager);
-  constructor(private didServiceLac1: DidServiceLac1) {}
+  private didServiceLac1: DidServiceLac1;
+  constructor() {
+    this.didServiceLac1 = new DidServiceLac1();
+  }
   async removeManager(_entityDid: string): Promise<any> {
     throw new Error('Method not implemented.');
   }
@@ -61,14 +64,12 @@ export class ManagerService implements IManagerService {
       await this.didServiceLac1.addNewEthereumAccountIdAttribute(
         newAccountIdAttribute
       );
-    console.log('incoming new manager::::::', newManager);
     const managerToSave: IManager = {
       entityDid: newAccountIdAttribute.did,
       managerDid: newManager.delegateDid,
       managerAddress: newManager.delegateAddress
     };
     const manager = EntityMapper.mapTo(Manager, managerToSave);
-    console.log('::::::::::::::.....', manager);
     await this.managerRepository.insert(manager);
     return managerToSave;
   }

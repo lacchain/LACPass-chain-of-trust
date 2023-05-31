@@ -1,7 +1,7 @@
 import {
   DID_LAC1,
   IDENTITY_MANAGER_BASE_URL,
-  COT_IS_DEPENDENT_SERVICE,
+  IS_COT_DEPENDENT_SERVICE,
   log4TSProvider,
   DID_LAC1_ADD_NEW_ETHEREUM_ACCOUNT_ATTRIBUTE
 } from '../../../config';
@@ -27,8 +27,8 @@ export class DidServiceLac1 {
   private didService: DidLacService | null;
 
   constructor() {
-    if (COT_IS_DEPENDENT_SERVICE !== 'true') {
-      this.log.info('Configuring identity-manager library usage');
+    if (IS_COT_DEPENDENT_SERVICE !== 'true') {
+      this.log.info('Configuring library usage');
       this.createDid = this.createDidByLib;
       this.addNewEthereumAccountIdAttribute =
         this.addNewEthereumAccountIdAttributeByLib;
@@ -37,7 +37,7 @@ export class DidServiceLac1 {
       const S = require('lacpass-identity').DidLac1Service;
       this.didService = new S();
     } else {
-      this.log.info('Configuring identity-manager external service connection');
+      this.log.info('Configuring external service connection');
       this.addNewEthereumAccountIdAttribute =
         this.addNewEthereumAccountIdAttributeByExternalService;
       this.createDid = this.createDidByExternalService;

@@ -10,7 +10,7 @@ import {
   TYPEORM_MIGRATIONS_RUN,
   PRODUCTION_ENV,
   TYPEORM_TYPE,
-  COT_IS_DEPENDENT_SERVICE,
+  IS_COT_DEPENDENT_SERVICE,
   log4TSProvider
 } from '@config';
 
@@ -45,7 +45,7 @@ const config: ConnectionOptions = {
   }
 };
 
-if (COT_IS_DEPENDENT_SERVICE !== 'true') {
+if (IS_COT_DEPENDENT_SERVICE !== 'true') {
   log.info('Importing entities from external components');
   config.entities?.push(DidEntity);
   config.entities?.push(Secp256k1Entity);
