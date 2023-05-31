@@ -7,10 +7,10 @@ import {
   Param
 } from 'routing-controllers';
 import { Service } from 'typedi';
-import { ErrorsMessages } from '@constants/errorMessages';
-import { ManagerService } from '@services/manager';
+import { ErrorsMessages } from '../../constants/errorMessages';
+import { ManagerService } from '../../services/manager';
 import { IManager } from 'src/interfaces/manager/manager';
-import { NewAccountIdAttributeDTO } from 'lacpass-identity';
+import { NewManagerDto } from '../../dto/lac1/managerDTO';
 
 @JsonController('/manager')
 @Service()
@@ -19,10 +19,10 @@ export class ManagerController {
 
   @Post()
   async createManager(
-    @Body({ validate: true }) delegate: NewAccountIdAttributeDTO
+    @Body({ validate: true }) newManager: NewManagerDto
   ): Promise<any> {
     try {
-      return this.managerService.createManager(delegate);
+      return this.managerService.createManager(newManager);
     } catch (error: any) {
       throw new BadRequestError(
         error.detail ?? error.message ?? ErrorsMessages.INTERNAL_SERVER_ERROR

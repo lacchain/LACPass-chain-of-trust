@@ -9,6 +9,11 @@ export interface IManagerService {
   removeManager(entityDid: string): Promise<any>;
 }
 
+export interface INewManager {
+  did: string;
+  validDays: number;
+}
+
 export interface IManager {
   entityDid: string;
   managerDid: string;

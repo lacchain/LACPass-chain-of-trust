@@ -1,4 +1,8 @@
-import { IManager, IManagerService } from 'src/interfaces/manager/manager';
+import {
+  IManager,
+  IManagerService,
+  INewManager
+} from 'src/interfaces/manager/manager';
 import { Service } from 'typedi';
 import { DidServiceLac1 } from './external/did-lac/did.service';
 import { INewAccountIdAttribute } from 'lacpass-identity';
@@ -33,28 +37,38 @@ export class ManagerService implements IManagerService {
   renewManagerAuthorization(): Promise<any> {
     throw new Error('Method not implemented.');
   }
-  async createManager(
-    newAccountIdAttribute: INewAccountIdAttribute
-  ): Promise<IManager> {
+  async createManager(managerRequest: INewManager): Promise<IManager> {
     const existManager = await this.managerRepository.findOne(undefined, {
       where: {
-        entityDid: newAccountIdAttribute.did
+        entityDid: managerRequest.did
       }
     });
     if (existManager) {
       const message = ErrorsMessages.MANAGER_ALREADY_EXISTIS;
       throw new BadRequestError(message);
     }
+
+    return this.addManagerAsAttribute(managerRequest);
+  }
+
+  async addManagerAsAttribute(managerRequest: INewManager): Promise<IManager> {
+    const newAccountIdAttribute: INewAccountIdAttribute = {
+      did: managerRequest.did,
+      validDays: managerRequest.validDays,
+      relation: 'dele'
+    };
     const newManager =
       await this.didServiceLac1.addNewEthereumAccountIdAttribute(
         newAccountIdAttribute
       );
+    console.log('incoming new manager::::::', newManager);
     const managerToSave: IManager = {
       entityDid: newAccountIdAttribute.did,
       managerDid: newManager.delegateDid,
       managerAddress: newManager.delegateAddress
     };
     const manager = EntityMapper.mapTo(Manager, managerToSave);
+    console.log('::::::::::::::.....', manager);
     await this.managerRepository.insert(manager);
     return managerToSave;
   }
