@@ -1,9 +1,5 @@
-import { INewAccountIdAttribute } from 'lacpass-identity';
-
 export interface IManagerService {
-  createManager(
-    newAccountIdAttribute: INewAccountIdAttribute
-  ): Promise<IManager>;
+  createManager(managerRequest: INewManager): Promise<IManager>;
   getManager(entityDid: string): Promise<IManager>;
   renewManagerAuthorization(): Promise<any>;
   removeManager(entityDid: string): Promise<any>;
