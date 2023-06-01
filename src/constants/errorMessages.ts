@@ -28,7 +28,10 @@ export enum ErrorsMessages {
 
   // eslint-disable-next-line max-len
   MANAGER_ALREADY_EXISTIS = 'A manager already exists for the entity Did, please remove it before creating a new one',
-  MANAGER_DOES_NOT_EXIST = 'A manager does not exist for the Entity Did passed in'
+  MANAGER_DOES_NOT_EXIST = 'A manager does not exist for the Entity Did passed in',
+  CREATE_KEY_ERROR = 'An internal server error occurred while trying to create a new key',
+  // eslint-disable-next-line max-len
+  SIGN_TRANSACTION_ERROR = 'An error occurred while trying to sign transaction against external service'
 }
 
 export const Errors = {
