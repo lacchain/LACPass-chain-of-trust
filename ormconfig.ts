@@ -10,10 +10,11 @@ import {
   TYPEORM_MIGRATIONS_RUN,
   PRODUCTION_ENV,
   TYPEORM_TYPE,
-  IS_DEPENDENT_SERVICE,
+  IS_COT_DEPENDENT_SERVICE,
   log4TSProvider
 } from '@config';
 
+// TODO: import Secp256k1Entity from key-manager
 import { DidEntity, Secp256k1Entity } from 'lacpass-identity';
 
 const log = log4TSProvider.getLogger('ormConfig');
@@ -44,7 +45,7 @@ const config: ConnectionOptions = {
   }
 };
 
-if (IS_DEPENDENT_SERVICE !== 'true') {
+if (IS_COT_DEPENDENT_SERVICE !== 'true') {
   log.info('Importing entities from external components');
   config.entities?.push(DidEntity);
   config.entities?.push(Secp256k1Entity);

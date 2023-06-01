@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { config } from 'dotenv';
 import { LogLevel } from 'typescript-logging';
 import { Log4TSProvider } from 'typescript-logging-log4ts-style';
@@ -5,7 +6,7 @@ import { Log4TSProvider } from 'typescript-logging-log4ts-style';
 config({ path: `.env.${process.env.ENV || 'dev'}` });
 
 export const log4TSProvider = Log4TSProvider.createProvider(
-  'Log4ProviderChainOfTrust',
+  'Log4ProviderChainOfTrust' + randomUUID(),
   {
     level: LogLevel.Debug,
     groups: [
@@ -55,9 +56,8 @@ export const {
   DOCS_ENABLED,
   SENDGRID_API_USER,
   SENDGRID_API_KEY,
-  IS_DEPENDENT_SERVICE,
+  IS_COT_DEPENDENT_SERVICE,
   IDENTITY_MANAGER_BASE_URL,
-  DID_WEB_LAC,
-  DID_WEB_LAC_CONTROLLER,
-  DID_WEB_LAC_DECODE_DID
+  DID_LAC1,
+  DID_LAC1_ADD_NEW_ETHEREUM_ACCOUNT_ATTRIBUTE
 } = process.env;
