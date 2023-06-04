@@ -39,7 +39,9 @@ export enum ErrorsMessages {
   LACCHAIN_CONTRACT_TRANSACTION_ERROR = 'There was an error, there may be an issue with the params you are sending',
   // eslint-disable-next-line max-len
   UNEXPECTED_RESPONSE_IN_SUCCESSFUL_TRANSACTION_ERROR = 'Transaction was successfully completed but received an unexpected response',
-  UNSUPPORTED_DID_METHOD_ERROR = 'Unsupported Did method'
+  UNSUPPORTED_DID_METHOD_ERROR = 'Unsupported Did method',
+  NOT_CA_CERTIFICATE_ERROR = 'Uploaded file is not a Certificate Authority',
+  X509_EXPIRED_CERTIFICATE = 'Certificate has expired'
 }
 
 export const Errors = {

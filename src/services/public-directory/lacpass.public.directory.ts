@@ -48,6 +48,7 @@ export class LacPassPublicDirectory {
       formData.data
     ) as PublicDirectoryMemberValidator;
     const x509CA = new X509Certificate(caCert.buffer);
+    this._validatex509Cert(x509CA);
     if (!publicDirectoryMember.memberData) {
       throw new BadRequestError(ErrorsMessages.BAD_REQUEST_ERROR);
     }
@@ -55,6 +56,17 @@ export class LacPassPublicDirectory {
       x509CA.raw.toString('base64');
     await this._validate(publicDirectoryMember);
     return this.addMember(publicDirectoryMember);
+  }
+  private _validatex509Cert(x509CA: X509Certificate) {
+    if (!x509CA.ca) {
+      throw new BadRequestError(ErrorsMessages.NOT_CA_CERTIFICATE_ERROR);
+    }
+    const validTo = x509CA.validTo;
+    const futureTime = Math.floor(new Date(validTo).getTime() / 1000);
+    const delta = futureTime - Math.floor(Date.now() / 1000);
+    if (delta < 0) {
+      throw new BadRequestError(ErrorsMessages.X509_EXPIRED_CERTIFICATE);
+    }
   }
   private async _validate(
     publicDirectoryMemberV: PublicDirectoryMemberValidator
