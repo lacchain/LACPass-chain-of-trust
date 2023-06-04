@@ -54,3 +54,4 @@ curl -X 'POST' ${add_member_to_public_directory_url} -H 'accept: application/jso
 ```
 
 #### Onboarding the member into the Chain of Trust
+TBD
