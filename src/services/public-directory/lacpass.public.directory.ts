@@ -17,7 +17,11 @@ import { ErrorsMessages } from '../../constants/errorMessages';
 import { X509Certificate } from 'crypto';
 import { IEthereumTransactionResponse } from 'src/interfaces/ethereum/transaction';
 // eslint-disable-next-line max-len
-import { PublicDirectoryMemberValidator } from '../../dto/public.directory/public.directoryDTO';
+import {
+  PublicDirectoryMemberDTO,
+  MemberDataValidator,
+  PublicDirectoryMemberValidator
+} from '../../dto/public.directory/public.directoryDTO';
 
 import { IdentityValidator } from './laccpass.identity.structure';
 import { IManager } from 'src/interfaces/manager/manager';
@@ -27,6 +31,7 @@ export class LacPassPublicDirectory {
   publicDirectory: PublicDirectory;
   manager: ManagerService;
   identityValidator: IdentityValidator;
+  memberDataEncodingVersion = '1.0.0';
   constructor() {
     this.publicDirectory = new PublicDirectory(
       resolvePublicDirectoryAddress(),
@@ -44,17 +49,24 @@ export class LacPassPublicDirectory {
     if (Object.keys(formData?.data).length === 0) {
       throw new BadRequestError(ErrorsMessages.BAD_REQUEST_ERROR);
     }
-    const publicDirectoryMember = JSON.parse(
-      formData.data
-    ) as PublicDirectoryMemberValidator;
+    const addMemberDto = JSON.parse(formData.data) as PublicDirectoryMemberDTO;
+    const memberData = new MemberDataValidator();
+    memberData.identificationData = addMemberDto.identificationData;
+    const publicDirectoryMember = new PublicDirectoryMemberValidator();
+    publicDirectoryMember.validDays = addMemberDto.validDays;
+    publicDirectoryMember.expires = addMemberDto.expires;
+    publicDirectoryMember.chainOfTrustAddress =
+      addMemberDto.chainOfTrustAddress;
+    publicDirectoryMember.memberData = memberData;
     const x509CA = new X509Certificate(caCert.buffer);
     this._validatex509Cert(x509CA);
+
     if (!publicDirectoryMember.memberData) {
       throw new BadRequestError(ErrorsMessages.BAD_REQUEST_ERROR);
     }
     publicDirectoryMember.memberData.certificateAuthority =
       x509CA.raw.toString('base64');
-    await this._validate(publicDirectoryMember);
+    await this._validateAndFillAdditionalParams(publicDirectoryMember);
     return this.addMember(publicDirectoryMember);
   }
   private _validatex509Cert(x509CA: X509Certificate) {
@@ -68,9 +80,13 @@ export class LacPassPublicDirectory {
       throw new BadRequestError(ErrorsMessages.X509_EXPIRED_CERTIFICATE);
     }
   }
-  private async _validate(
+  private async _validateAndFillAdditionalParams(
     publicDirectoryMemberV: PublicDirectoryMemberValidator
   ) {
+    if (publicDirectoryMemberV.memberData) {
+      publicDirectoryMemberV.memberData.version =
+        this.memberDataEncodingVersion;
+    }
     await this.identityValidator.validatePublicDirectoryMember(
       publicDirectoryMemberV
     );
