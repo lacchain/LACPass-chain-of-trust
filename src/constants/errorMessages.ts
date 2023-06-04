@@ -31,7 +31,15 @@ export enum ErrorsMessages {
   MANAGER_DOES_NOT_EXIST = 'A manager does not exist for the Entity Did passed in',
   CREATE_KEY_ERROR = 'An internal server error occurred while trying to create a new key',
   // eslint-disable-next-line max-len
-  SIGN_TRANSACTION_ERROR = 'An error occurred while trying to sign transaction against external service'
+  SIGN_TRANSACTION_ERROR = 'An error occurred while trying to sign transaction against external service',
+  PUBLIC_DIRECTORY_PRIVILEGE_ERROR = 'Could not find a manager with enough privileges',
+  // eslint-disable-next-line max-len
+  INVALID_EXPIRATION_DAYS_ERROR = 'Expiration days must be greater than zero when "expires" is true',
+  // eslint-disable-next-line max-len
+  LACCHAIN_CONTRACT_TRANSACTION_ERROR = 'There was an error, there may be an issue with the params you are sending',
+  // eslint-disable-next-line max-len
+  UNEXPECTED_RESPONSE_IN_SUCCESSFUL_TRANSACTION_ERROR = 'Transaction was successfully completed but received an unexpected response',
+  UNSUPPORTED_DID_METHOD_ERROR = 'Unsupported Did method'
 }
 
 export const Errors = {

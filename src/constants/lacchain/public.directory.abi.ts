@@ -165,6 +165,12 @@ export const PUBLIC_DIRECTORY_ABI = [
       },
       {
         indexed: false,
+        internalType: 'bytes',
+        name: 'rawData',
+        type: 'bytes'
+      },
+      {
+        indexed: false,
         internalType: 'uint256',
         name: 'currentTimestap',
         type: 'uint256'
@@ -218,11 +224,6 @@ export const PUBLIC_DIRECTORY_ABI = [
           {
             internalType: 'string',
             name: 'did',
-            type: 'string'
-          },
-          {
-            internalType: 'string',
-            name: 'name',
             type: 'string'
           },
           {
@@ -343,11 +344,6 @@ export const PUBLIC_DIRECTORY_ABI = [
           {
             components: [
               {
-                internalType: 'string',
-                name: 'name',
-                type: 'string'
-              },
-              {
                 internalType: 'uint256',
                 name: 'exp',
                 type: 'uint256'
@@ -366,11 +362,6 @@ export const PUBLIC_DIRECTORY_ABI = [
                 internalType: 'bool',
                 name: 'expires',
                 type: 'bool'
-              },
-              {
-                internalType: 'bytes',
-                name: 'rawdDta',
-                type: 'bytes'
               }
             ],
             internalType: 'struct IPublicDirectory.member',
@@ -471,11 +462,6 @@ export const PUBLIC_DIRECTORY_ABI = [
     name: 'memberDetails',
     outputs: [
       {
-        internalType: 'string',
-        name: 'name',
-        type: 'string'
-      },
-      {
         internalType: 'uint256',
         name: 'exp',
         type: 'uint256'
@@ -494,11 +480,6 @@ export const PUBLIC_DIRECTORY_ABI = [
         internalType: 'bool',
         name: 'expires',
         type: 'bool'
-      },
-      {
-        internalType: 'bytes',
-        name: 'rawdDta',
-        type: 'bytes'
       }
     ],
     stateMutability: 'view',
@@ -570,11 +551,6 @@ export const PUBLIC_DIRECTORY_ABI = [
           {
             internalType: 'string',
             name: 'did',
-            type: 'string'
-          },
-          {
-            internalType: 'string',
-            name: 'name',
             type: 'string'
           },
           {

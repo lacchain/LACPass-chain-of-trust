@@ -73,4 +73,20 @@ export class ManagerService implements IManagerService {
     await this.managerRepository.insert(manager);
     return managerToSave;
   }
+
+  async findManager(address: string): Promise<IManager> {
+    const manager = await this.managerRepository.findOne(undefined, {
+      where: {
+        managerAddress: address
+      }
+    });
+    if (!manager) {
+      throw new NotFoundError(ErrorsMessages.MANAGER_DOES_NOT_EXIST);
+    }
+    return {
+      entityDid: manager.entityDid,
+      managerDid: manager.managerDid,
+      managerAddress: manager.managerAddress
+    } as IManager;
+  }
 }

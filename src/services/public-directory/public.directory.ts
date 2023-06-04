@@ -5,7 +5,12 @@ import { GasModelProvider, GasModelSigner } from '@lacchain/gas-model-provider';
 import { Member } from 'src/interfaces/publc-directory/member';
 import { Interface } from 'ethers/lib/utils';
 import { LacchainLib } from '../lacchain/lacchain-ethers';
-import { ITransaction } from 'src/interfaces/ethereum/transaction';
+import {
+  IEthereumTransactionResponse,
+  ITransaction
+} from 'src/interfaces/ethereum/transaction';
+import { BadRequestError } from 'routing-controllers';
+import { ErrorsMessages } from '@constants/errorMessages';
 
 export class PublicDirectory {
   private publicDirectory: ethers.Contract;
@@ -16,11 +21,8 @@ export class PublicDirectory {
     rpcUrl: string,
     nodeAddress: string
   ) {
-    const provider = this.configureProvider(
-      rpcUrl,
-      Wallet.createRandom().privateKey,
-      nodeAddress
-    );
+    const key = Wallet.createRandom().privateKey;
+    const provider = this.configureProvider(rpcUrl, key, nodeAddress);
     this.publicDirectory = new ethers.Contract(
       publicDirectoryAddress,
       PUBLIC_DIRECTORY_ABI,
@@ -29,28 +31,51 @@ export class PublicDirectory {
     this.lacchainLib = new LacchainLib(nodeAddress, rpcUrl);
   }
 
-  async addMember(member: Member, managerAddress: string): Promise<any> {
+  async owner(): Promise<string> {
+    return this.publicDirectory.owner();
+  }
+
+  async addMember(
+    member: Member,
+    managerAddress: string
+  ): Promise<IEthereumTransactionResponse> {
     const methodName = 'addMember';
     const methodSignature = [
       `function ${methodName}(tuple(string did, 
-        string name, uint256 exp, bool expires, 
-        address chainOfTrustAddress, bytes rawData) _member) external`
+        uint256 exp, bool expires,
+        address chainOfTrustAddress,bytes rawData) member) external`
     ];
     const methodInterface = new Interface(methodSignature);
     const encodedData = methodInterface.encodeFunctionData(methodName, [
-      member.did,
-      member.name,
-      member.exp,
-      member.expires,
-      member.chainOfTrustAddress,
-      member.rawData
+      [
+        member.did,
+        member.exp,
+        member.expires,
+        member.chainOfTrustAddress,
+        member.rawData
+      ]
     ]);
     const tx: ITransaction = {
       from: managerAddress,
       to: this.publicDirectory.address,
       data: encodedData
     };
-    return this.lacchainLib.signAndSend(tx);
+    const txResponse = await this.lacchainLib.signAndSend(tx);
+    const receipt = await this.publicDirectory.provider.getTransactionReceipt(
+      txResponse.txHash
+    );
+    const iFace = new ethers.utils.Interface(PUBLIC_DIRECTORY_ABI);
+    for (const log of receipt.logs) {
+      if (log.address == this.publicDirectory.address) {
+        const parsed = iFace.parseLog(log);
+        if (parsed.name == 'MemberChanged') {
+          return txResponse;
+        }
+      }
+    }
+    throw new BadRequestError(
+      ErrorsMessages.UNEXPECTED_RESPONSE_IN_SUCCESSFUL_TRANSACTION_ERROR
+    ); // may happen if contract is updated where event structures are changed
   }
 
   private configureProvider(
