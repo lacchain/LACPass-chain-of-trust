@@ -10,4 +10,37 @@ and then you will find the following methods:
 
 To interact with this API you can just enter the Swagger exposed in: http://<HOST_WHERE_APP_IS_RUNNING>:<PORT>/docs/#/
 
-<img src="./img/CoT-API.png" width="1100">
+<img src="../img/CoT-API.png" width="1100">
+
+Or via Command-Line Interface:
+
+```sh
+api_url=http://localhost:3002 # Set LACPass Chain of Trust url
+manager_url="$api_url"/api/v1/manager
+```
+
+* Create a manager
+
+```sh
+did="did:lac1:1iT5zJBHgKg82MjvPmgmS44ADf7TNqCHkJWViWdYad4hG9Jzm27ekXBsfMMg58GojJ24" # Replace this. Main Entity Did
+validDays=100 # Number of days in which the manager to be created will be considered valid
+add_manager_url=$manager_url
+curl -X 'POST' \
+  ${add_manager_url} \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "did": '\"$did\"',
+  "validDays": 100
+}'
+```
+
+* Get Manager
+
+```sh
+did="did:lac1:1iT5zJBHgKg82MjvPmgmS44ADf7TNqCHkJWViWdYad4hG9Jzm27ekXBsfMMg58GojJ24" # Replace this. Main Entity Did
+get_manager_url="$manager_url"/"$did"
+curl -X 'GET' \
+  $get_manager_url \
+  -H 'accept: application/json'
+```
