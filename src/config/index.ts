@@ -1,3 +1,4 @@
+import { CHAIN_OF_TRUST } from '@constants/lacchain/chain.of.trust.address';
 import { PUBLIC_DIRECTORY } from '../constants/lacchain/public.directory.address';
 import { randomUUID } from 'crypto';
 import { config } from 'dotenv';
@@ -94,8 +95,41 @@ export const resolvePublicDirectoryAddress = (
   return wellKnownPublicDirectoryAddress;
 };
 
+export const resolveChainOfTrustAddress = (
+  chainOfTrustAddress = process.env.CHAIN_OF_TRUST_CONTRACT_ADDRESS
+): string => {
+  if (chainOfTrustAddress) {
+    if (!isAddress(chainOfTrustAddress)) {
+      log.error(
+        'Specified CHAIN_OF_TRUST_CONTRACT_ADDRESS',
+        CHAIN_OF_TRUST_CONTRACT_ADDRESS,
+        'is not a valid address ... exiting'
+      );
+      process.exit(1); // exiting since this is a critical error
+    }
+    // TODO: validate just by making a call to contract to validate that's a correct one
+    // could just verify against the desired version
+    log.info('Returning custom chain of trust address', chainOfTrustAddress);
+    return chainOfTrustAddress;
+  }
+  const wellKnownChainOfTrustAddress = CHAIN_OF_TRUST.get(CHAIN_ID);
+  if (!wellKnownChainOfTrustAddress) {
+    log.error(
+      'Could not find well-known chain of trust address for chain',
+      CHAIN_ID
+    );
+    process.exit(1); // exiting since this is a critical error
+  }
+  log.info(
+    'Returning default chain of trust address',
+    wellKnownChainOfTrustAddress
+  );
+  return wellKnownChainOfTrustAddress;
+};
+
 export const PUBLIC_DIRECTORY_CONTRACT_ADDRESS =
   resolvePublicDirectoryAddress();
+export const CHAIN_OF_TRUST_CONTRACT_ADDRESS = resolveChainOfTrustAddress();
 
 export const {
   ENV,

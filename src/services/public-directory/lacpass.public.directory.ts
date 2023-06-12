@@ -29,9 +29,9 @@ import { IManager } from 'src/interfaces/manager/manager';
 @Service()
 export class LacPassPublicDirectory {
   publicDirectory: PublicDirectory;
-  manager: ManagerService;
-  identityValidator: IdentityValidator;
-  memberDataEncodingVersion = '1.0.0';
+  private manager: ManagerService;
+  private identityValidator: IdentityValidator;
+  private memberDataEncodingVersion = '1.0.0';
   constructor() {
     this.publicDirectory = new PublicDirectory(
       resolvePublicDirectoryAddress(),
@@ -139,14 +139,12 @@ export class LacPassPublicDirectory {
       }
     } catch (error: any) {
       if (error.detail ?? error.message) {
-        throw new BadRequestError(
-          ErrorsMessages.PUBLIC_DIRECTORY_PRIVILEGE_ERROR
-        );
+        throw new BadRequestError(ErrorsMessages.MANAGER_PRIVILEGE_ERROR);
       }
       throw new InternalServerError(
         error.detail ?? error.message ?? ErrorsMessages.INTERNAL_SERVER_ERROR
       );
     }
-    throw new BadRequestError(ErrorsMessages.PUBLIC_DIRECTORY_PRIVILEGE_ERROR);
+    throw new BadRequestError(ErrorsMessages.MANAGER_PRIVILEGE_ERROR);
   }
 }

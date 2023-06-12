@@ -15,7 +15,7 @@ import { ErrorsMessages } from '@constants/errorMessages';
 export class PublicDirectory {
   private publicDirectory: ethers.Contract;
   private readonly lacchainLib: LacchainLib;
-  log = log4TSProvider.getLogger('PublicDirectoryService');
+  log = log4TSProvider.getLogger('PublicDirectoryIterface');
   constructor(
     publicDirectoryAddress: string,
     rpcUrl: string,
