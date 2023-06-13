@@ -2,7 +2,10 @@ import { Interface } from 'ethers/lib/utils';
 import { CHAIN_OF_TRUST_ABI } from '../../constants/lacchain/chain.of.trust.abi';
 import { LacchainBaseContract } from '@services/base.contract';
 import { IEthereumTransactionResponse, ITransaction } from 'lacpass-identity';
-import { ChainOfTrustMember } from 'src/interfaces/chain-of-trust/chain.of.trust';
+import {
+  ChainOfTrustMember,
+  ChainOfTrustMemberDetails
+} from 'src/interfaces/chain-of-trust/chain.of.trust';
 import { Service } from 'typedi';
 import { ethers } from 'ethers';
 import { BadRequestError } from 'routing-controllers';
@@ -18,6 +21,32 @@ export class ChainOfTrust extends LacchainBaseContract {
       CHAIN_OF_TRUST_ABI,
       'ChainOfTrustContractInterface'
     );
+  }
+
+  async getMember(memberEntityManager: string): Promise<any> {
+    return this.contractInstance.group(memberEntityManager);
+  }
+
+  async getMemberDetailsByEntityManager(
+    memberEntityManager: string
+  ): Promise<ChainOfTrustMemberDetails> {
+    const member = await this.contractInstance.getMemberDetailsByEntityManager(
+      memberEntityManager
+    );
+    const iat = parseInt(ethers.utils.formatUnits(member[0], 0));
+    const exp = parseInt(ethers.utils.formatUnits(member[1], 0));
+    const gId = parseInt(ethers.utils.formatUnits(member[2], 0));
+    const trustedBy = member[3];
+    const didAddress = member[4];
+    const isValid = member[5];
+    return {
+      iat,
+      exp,
+      gId,
+      trustedBy,
+      didAddress,
+      isValid
+    } as ChainOfTrustMemberDetails;
   }
 
   async owner(): Promise<string> {

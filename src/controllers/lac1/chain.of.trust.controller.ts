@@ -4,7 +4,8 @@ import {
   Get,
   BadRequestError,
   InternalServerError,
-  Body
+  Body,
+  Param
 } from 'routing-controllers';
 import { Service } from 'typedi';
 import { ErrorsMessages } from '../../constants/errorMessages';
@@ -23,6 +24,21 @@ export class ChainOfTrustController {
   ): Promise<any> {
     try {
       return this.chainOfTrust.addOrUpdateMember(chainOfTrustMember);
+    } catch (error: any) {
+      if (error.detail ?? error.message) {
+        throw new BadRequestError(error.detail ?? error.message);
+      }
+      throw new InternalServerError(
+        error.detail ?? error.message ?? ErrorsMessages.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+  @Get('/get-member/:memberEntityManagerAddress')
+  async getMember(
+    @Param('memberEntityManagerAddress') memberEntityManagerAddress: string
+  ): Promise<any> {
+    try {
+      return this.chainOfTrust.getMember(memberEntityManagerAddress);
     } catch (error: any) {
       if (error.detail ?? error.message) {
         throw new BadRequestError(error.detail ?? error.message);

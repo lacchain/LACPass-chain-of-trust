@@ -3,23 +3,28 @@ import { ChainOfTrust } from './chain.of.trust';
 import {
   getNodeAddress,
   getRpcUrl,
+  log4TSProvider,
   resolveChainOfTrustAddress
 } from '../../config';
 import { ManagerService } from '../manager';
 import {
   ChainOfTrustMember,
+  ChainOfTrustMemberDetails,
   IChainOfTrustMember
 } from 'src/interfaces/chain-of-trust/chain.of.trust';
 import { IManager } from 'src/interfaces/manager/manager';
 import { BadRequestError, InternalServerError } from 'routing-controllers';
 import { ErrorsMessages } from '../../constants/errorMessages';
 import { IEthereumTransactionResponse } from 'src/interfaces/ethereum/transaction';
+import { Logger } from 'typescript-logging-log4ts-style';
 
 @Service()
 export class LacpassChainOfTrust {
   private readonly chainOfTrust: ChainOfTrust;
   private manager: ManagerService;
+  protected log: Logger;
   constructor() {
+    this.log = log4TSProvider.getLogger('LacPassChainOfTrustService');
     const chainOfTrustAddress = resolveChainOfTrustAddress();
     const rpcUrl = getRpcUrl();
     const nodeAddress = getNodeAddress();
@@ -39,9 +44,25 @@ export class LacpassChainOfTrust {
       period: member.validDays * 86400
     };
     const managerAddress = (await this.getManager()).managerAddress;
+    const foundMember = await this.getMember(member.memberEntityAddress);
+    if (foundMember.isValid) {
+      this.log.info(
+        'Member already exists, will expire in',
+        new Date(foundMember.exp * 1000),
+        ' updating anyways ...'
+      );
+    }
     return this.chainOfTrust.addOrUpdateMember(
       addOrUpdatemember,
       managerAddress
+    );
+  }
+
+  async getMember(
+    memberEntityManager: string
+  ): Promise<ChainOfTrustMemberDetails> {
+    return this.chainOfTrust.getMemberDetailsByEntityManager(
+      memberEntityManager
     );
   }
   async getManager(): Promise<IManager> {

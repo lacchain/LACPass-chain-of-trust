@@ -9,3 +9,12 @@ export interface IChainOfTrustMember {
   entityDid: string;
   validDays: number;
 }
+
+export interface ChainOfTrustMemberDetails {
+  iat: number;
+  exp: number;
+  gId: number;
+  trustedBy: string;
+  didAddress: string;
+  isValid: boolean;
+}

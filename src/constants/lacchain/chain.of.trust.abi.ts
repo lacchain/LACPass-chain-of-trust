@@ -544,6 +544,57 @@ export const CHAIN_OF_TRUST_ABI = [
     inputs: [
       {
         internalType: 'address',
+        name: 'memberEntityManager',
+        type: 'address'
+      }
+    ],
+    name: 'getMemberDetailsByEntityManager',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'iat',
+            type: 'uint256'
+          },
+          {
+            internalType: 'uint256',
+            name: 'exp',
+            type: 'uint256'
+          },
+          {
+            internalType: 'uint256',
+            name: 'gId',
+            type: 'uint256'
+          },
+          {
+            internalType: 'address',
+            name: 'trustedBy',
+            type: 'address'
+          },
+          {
+            internalType: 'address',
+            name: 'didAddress',
+            type: 'address'
+          },
+          {
+            internalType: 'bool',
+            name: 'isValid',
+            type: 'bool'
+          }
+        ],
+        internalType: 'struct IChainOfTrustBase.MemberProfile',
+        name: 'member',
+        type: 'tuple'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
         name: '',
         type: 'address'
       }
