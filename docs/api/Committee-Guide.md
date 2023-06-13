@@ -54,4 +54,22 @@ curl -X 'POST' ${add_member_to_public_directory_url} -H 'accept: application/jso
 ```
 
 #### Onboarding the member into the Chain of Trust
-TBD
+
+
+```sh
+# Input variables:
+memberEntityAddress="0x41476C85Cd3d099175574F07490Dc6421f8fc9BB"
+entityDid="did:lac1:1iT5LZxdDHmra8e33FfEfyS1BjqR9J2PwZN8JastL9YsBgvpxgjTnuKMi8HkRCvuRLYh"
+validDays=100
+
+# process
+data='{
+  "memberEntityAddress": '\"$memberEntityAddress\"',
+  "entityDid": '\"$entityDid\"',
+  "validDays": '$validDays'
+}'
+add_or_update_member="$api_url"/api/v1/chain-of-trust/add-or-update-member
+curl -X 'POST' ${add_or_update_member} -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d "$data"
+```
