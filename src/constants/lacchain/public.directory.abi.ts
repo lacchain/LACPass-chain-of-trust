@@ -71,7 +71,7 @@ export const PUBLIC_DIRECTORY_ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
         internalType: 'string',
         name: 'did',
         type: 'string'
@@ -96,7 +96,7 @@ export const PUBLIC_DIRECTORY_ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
         internalType: 'string',
         name: 'did',
         type: 'string'
@@ -140,7 +140,7 @@ export const PUBLIC_DIRECTORY_ABI = [
         type: 'uint256'
       },
       {
-        indexed: true,
+        indexed: false,
         internalType: 'string',
         name: 'did',
         type: 'string'
@@ -493,6 +493,19 @@ export const PUBLIC_DIRECTORY_ABI = [
         internalType: 'address',
         name: '',
         type: 'address'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'prevBlock',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
       }
     ],
     stateMutability: 'view',
