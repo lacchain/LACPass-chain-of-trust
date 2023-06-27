@@ -37,15 +37,17 @@ export class ChainOfTrust extends LacchainBaseContract {
     const exp = parseInt(ethers.utils.formatUnits(member[1], 0));
     const gId = parseInt(ethers.utils.formatUnits(member[2], 0));
     const trustedBy = member[3];
-    const didAddress = member[4];
+    const did = member[4];
     const isValid = member[5];
+    const isRoot = gId == 1;
     return {
       iat,
       exp,
       gId,
       trustedBy,
-      didAddress,
-      isValid
+      did,
+      isValid,
+      isRoot
     } as ChainOfTrustMemberDetails;
   }
 

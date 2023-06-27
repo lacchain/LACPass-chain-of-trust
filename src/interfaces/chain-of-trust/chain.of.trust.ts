@@ -15,6 +15,7 @@ export interface ChainOfTrustMemberDetails {
   exp: number;
   gId: number;
   trustedBy: string;
-  didAddress: string;
+  did: string;
   isValid: boolean;
+  isRoot: boolean;
 }

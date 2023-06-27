@@ -1,40 +1,39 @@
 export const CHAIN_OF_TRUST_ABI = [
   {
-    inputs: [],
-    stateMutability: 'nonpayable',
-    type: 'constructor'
-  },
-  {
-    anonymous: false,
     inputs: [
       {
-        indexed: false,
         internalType: 'address',
-        name: 'previousAdmin',
+        name: 'trustedForwarderAddress',
         type: 'address'
       },
       {
-        indexed: false,
-        internalType: 'address',
-        name: 'newAdmin',
-        type: 'address'
-      }
-    ],
-    name: 'AdminChanged',
-    type: 'event'
-  },
-  {
-    anonymous: false,
-    inputs: [
+        internalType: 'uint8',
+        name: 'chainDepth',
+        type: 'uint8'
+      },
       {
-        indexed: true,
+        internalType: 'string',
+        name: 'did',
+        type: 'string'
+      },
+      {
         internalType: 'address',
-        name: 'beacon',
+        name: 'rootEntityManager',
         type: 'address'
+      },
+      {
+        internalType: 'uint8',
+        name: 'revokeMode',
+        type: 'uint8'
+      },
+      {
+        internalType: 'bool',
+        name: 'rootMaintainer',
+        type: 'bool'
       }
     ],
-    name: 'BeaconUpgraded',
-    type: 'event'
+    stateMutability: 'nonpayable',
+    type: 'constructor'
   },
   {
     anonymous: false,
@@ -84,31 +83,6 @@ export const CHAIN_OF_TRUST_ABI = [
       }
     ],
     name: 'DidChanged',
-    type: 'event'
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'by',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'didRegistry',
-        type: 'address'
-      },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'status',
-        type: 'bool'
-      }
-    ],
-    name: 'DidRegistryChange',
     type: 'event'
   },
   {
@@ -202,19 +176,6 @@ export const CHAIN_OF_TRUST_ABI = [
     inputs: [
       {
         indexed: false,
-        internalType: 'uint8',
-        name: 'version',
-        type: 'uint8'
-      }
-    ],
-    name: 'Initialized',
-    type: 'event'
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
         internalType: 'bool',
         name: 'isRootMaintainer',
         type: 'bool'
@@ -227,31 +188,6 @@ export const CHAIN_OF_TRUST_ABI = [
       }
     ],
     name: 'MaintainerModeChanged',
-    type: 'event'
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'delegateType',
-        type: 'bytes32'
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'by',
-        type: 'address'
-      },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'status',
-        type: 'bool'
-      }
-    ],
-    name: 'NewDelegateTypeChange',
     type: 'event'
   },
   {
@@ -324,19 +260,6 @@ export const CHAIN_OF_TRUST_ABI = [
     type: 'event'
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'implementation',
-        type: 'address'
-      }
-    ],
-    name: 'Upgraded',
-    type: 'event'
-  },
-  {
     inputs: [],
     name: 'ALLANCESTORS',
     outputs: [
@@ -365,32 +288,6 @@ export const CHAIN_OF_TRUST_ABI = [
   {
     inputs: [
       {
-        internalType: 'bytes32',
-        name: 'delegateType',
-        type: 'bytes32'
-      }
-    ],
-    name: 'addDelegateType',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'didRegistryAddress',
-        type: 'address'
-      }
-    ],
-    name: 'addDidRegistry',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
         name: 'memberEntity',
         type: 'address'
@@ -412,60 +309,6 @@ export const CHAIN_OF_TRUST_ABI = [
     type: 'function'
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'parentEntity',
-        type: 'address'
-      },
-      {
-        internalType: 'address',
-        name: 'memberEntity',
-        type: 'address'
-      },
-      {
-        internalType: 'string',
-        name: 'did',
-        type: 'string'
-      },
-      {
-        internalType: 'uint256',
-        name: 'period',
-        type: 'uint256'
-      }
-    ],
-    name: 'addOrUpdateGroupMemberByDelegate',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'defaultDelegateType',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'defaultDidRegistry',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
     inputs: [],
     name: 'depth',
     outputs: [
@@ -473,68 +316,6 @@ export const CHAIN_OF_TRUST_ABI = [
         internalType: 'uint8',
         name: '',
         type: 'uint8'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      },
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32'
-      }
-    ],
-    name: 'didDelegateTypes',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
-    ],
-    name: 'didRegistries',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'identity',
-        type: 'address'
-      }
-    ],
-    name: 'getDidRegistry',
-    outputs: [
-      {
-        internalType: 'address',
-        name: 'didRegistryAddress',
-        type: 'address'
       }
     ],
     stateMutability: 'view',
@@ -573,9 +354,9 @@ export const CHAIN_OF_TRUST_ABI = [
             type: 'address'
           },
           {
-            internalType: 'address',
-            name: 'didAddress',
-            type: 'address'
+            internalType: 'string',
+            name: 'did',
+            type: 'string'
           },
           {
             internalType: 'bool',
@@ -607,89 +388,17 @@ export const CHAIN_OF_TRUST_ABI = [
         type: 'uint256'
       },
       {
-        internalType: 'address',
-        name: 'didAddress',
-        type: 'address'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'trustedForwarderAddress',
-        type: 'address'
-      },
-      {
-        internalType: 'uint8',
-        name: 'chainDepth',
-        type: 'uint8'
-      },
-      {
         internalType: 'string',
         name: 'did',
         type: 'string'
-      },
-      {
-        internalType: 'address',
-        name: 'rootEntityManager',
-        type: 'address'
-      },
-      {
-        internalType: 'uint8',
-        name: 'revokeMode',
-        type: 'uint8'
-      },
-      {
-        internalType: 'bool',
-        name: 'rootMaintainer',
-        type: 'bool'
-      },
-      {
-        internalType: 'address',
-        name: 'didRegistry',
-        type: 'address'
-      },
-      {
-        internalType: 'bytes32',
-        name: 'delegateType',
-        type: 'bytes32'
       }
     ],
-    name: 'initialize',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function'
   },
   {
     inputs: [],
     name: 'isRootMaintainer',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'identity',
-        type: 'address'
-      },
-      {
-        internalType: 'bytes32',
-        name: 'delegateType',
-        type: 'bytes32'
-      }
-    ],
-    name: 'isValidDelegateType',
     outputs: [
       {
         internalType: 'bool',
@@ -747,35 +456,15 @@ export const CHAIN_OF_TRUST_ABI = [
   },
   {
     inputs: [],
-    name: 'proxiableUUID',
+    name: 'prevBlock',
     outputs: [
       {
-        internalType: 'bytes32',
+        internalType: 'uint256',
         name: '',
-        type: 'bytes32'
+        type: 'uint256'
       }
     ],
     stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'delegateType',
-        type: 'bytes32'
-      }
-    ],
-    name: 'removeDelegateType',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'removeDidRegistry',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function'
   },
   {
@@ -838,52 +527,6 @@ export const CHAIN_OF_TRUST_ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: 'ancestor',
-        type: 'address'
-      },
-      {
-        internalType: 'address',
-        name: 'memberEntity',
-        type: 'address'
-      },
-      {
-        internalType: 'string',
-        name: 'did',
-        type: 'string'
-      }
-    ],
-    name: 'revokeMemberByAnyAncestorByTheirDelegate',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'parentEntity',
-        type: 'address'
-      },
-      {
-        internalType: 'address',
-        name: 'memberEntity',
-        type: 'address'
-      },
-      {
-        internalType: 'string',
-        name: 'did',
-        type: 'string'
-      }
-    ],
-    name: 'revokeMemberByDelegate',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: 'memberEntity',
         type: 'address'
       },
@@ -894,24 +537,6 @@ export const CHAIN_OF_TRUST_ABI = [
       }
     ],
     name: 'revokeMemberByRoot',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'memberEntity',
-        type: 'address'
-      },
-      {
-        internalType: 'string',
-        name: 'did',
-        type: 'string'
-      }
-    ],
-    name: 'revokeMemberByRootByTheirDelegate',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function'
@@ -1040,37 +665,6 @@ export const CHAIN_OF_TRUST_ABI = [
     name: 'updateRevokeMode',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newImplementation',
-        type: 'address'
-      }
-    ],
-    name: 'upgradeTo',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newImplementation',
-        type: 'address'
-      },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes'
-      }
-    ],
-    name: 'upgradeToAndCall',
-    outputs: [],
-    stateMutability: 'payable',
     type: 'function'
   }
 ];
