@@ -1,4 +1,4 @@
-import { CHAIN_OF_TRUST } from '@constants/lacchain/chain.of.trust.address';
+import { CHAIN_OF_TRUST } from '../constants/lacchain/chain.of.trust.address';
 import { PUBLIC_DIRECTORY } from '../constants/lacchain/public.directory.address';
 import { randomUUID } from 'crypto';
 import { config } from 'dotenv';

@@ -72,6 +72,19 @@ export const PUBLIC_DIRECTORY_ABI = [
     inputs: [
       {
         indexed: false,
+        internalType: 'uint256',
+        name: 'contractPrevBlock',
+        type: 'uint256'
+      }
+    ],
+    name: 'ContractChange',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
         internalType: 'string',
         name: 'did',
         type: 'string'
@@ -296,6 +309,38 @@ export const PUBLIC_DIRECTORY_ABI = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    name: 'changed',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'contractPrevBlock',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: 'cotAddress',
         type: 'address'
@@ -367,6 +412,11 @@ export const PUBLIC_DIRECTORY_ABI = [
             internalType: 'struct IPublicDirectory.member',
             name: 'memberData',
             type: 'tuple'
+          },
+          {
+            internalType: 'uint256',
+            name: 'lastBlockChange',
+            type: 'uint256'
           },
           {
             internalType: 'uint256',
@@ -500,19 +550,6 @@ export const PUBLIC_DIRECTORY_ABI = [
   },
   {
     inputs: [],
-    name: 'prevBlock',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
     name: 'proxiableUUID',
     outputs: [
       {
@@ -626,6 +663,19 @@ export const PUBLIC_DIRECTORY_ABI = [
     name: 'upgradeToAndCall',
     outputs: [],
     stateMutability: 'payable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'version',
+    outputs: [
+      {
+        internalType: 'uint16',
+        name: '',
+        type: 'uint16'
+      }
+    ],
+    stateMutability: 'view',
     type: 'function'
   }
 ];

@@ -1,39 +1,16 @@
 export const CHAIN_OF_TRUST_ABI = [
   {
+    anonymous: false,
     inputs: [
       {
-        internalType: 'address',
-        name: 'trustedForwarderAddress',
-        type: 'address'
-      },
-      {
-        internalType: 'uint8',
-        name: 'chainDepth',
-        type: 'uint8'
-      },
-      {
-        internalType: 'string',
-        name: 'did',
-        type: 'string'
-      },
-      {
-        internalType: 'address',
-        name: 'rootEntityManager',
-        type: 'address'
-      },
-      {
-        internalType: 'uint8',
-        name: 'revokeMode',
-        type: 'uint8'
-      },
-      {
-        internalType: 'bool',
-        name: 'rootMaintainer',
-        type: 'bool'
+        indexed: false,
+        internalType: 'uint256',
+        name: 'contractPrevBlock',
+        type: 'uint256'
       }
     ],
-    stateMutability: 'nonpayable',
-    type: 'constructor'
+    name: 'ContractChange',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -169,6 +146,19 @@ export const CHAIN_OF_TRUST_ABI = [
       }
     ],
     name: 'GroupMemberRevoked',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'version',
+        type: 'uint8'
+      }
+    ],
+    name: 'Initialized',
     type: 'event'
   },
   {
@@ -560,6 +550,11 @@ export const CHAIN_OF_TRUST_ABI = [
         internalType: 'address',
         name: 'newRootManager',
         type: 'address'
+      },
+      {
+        internalType: 'string',
+        name: 'did',
+        type: 'string'
       }
     ],
     name: 'transferRoot',
@@ -665,6 +660,19 @@ export const CHAIN_OF_TRUST_ABI = [
     name: 'updateRevokeMode',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'version',
+    outputs: [
+      {
+        internalType: 'uint16',
+        name: '',
+        type: 'uint16'
+      }
+    ],
+    stateMutability: 'view',
     type: 'function'
   }
 ];
