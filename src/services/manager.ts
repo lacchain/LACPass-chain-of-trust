@@ -5,7 +5,7 @@ import {
 } from 'src/interfaces/manager/manager';
 import { Service } from 'typedi';
 import { DidServiceLac1 } from './external/did-lac/did.service';
-import { INewAccountIdAttribute } from 'lacpass-identity';
+import { INewAttribute } from 'lacpass-identity';
 import { getRepository } from 'typeorm';
 import { Manager } from '../entities/manager.entity';
 import { BadRequestError, NotFoundError } from 'routing-controllers';
@@ -55,7 +55,7 @@ export class ManagerService implements IManagerService {
   }
 
   async addManagerAsAttribute(managerRequest: INewManager): Promise<IManager> {
-    const newAccountIdAttribute: INewAccountIdAttribute = {
+    const newAccountIdAttribute: INewAttribute = {
       did: managerRequest.did,
       validDays: managerRequest.validDays,
       relation: 'dele'

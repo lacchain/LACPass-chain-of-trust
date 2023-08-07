@@ -9,7 +9,7 @@ import { ErrorsMessages } from '../../../constants/errorMessages';
 import {
   DidLacService,
   DidType,
-  INewAccountIdAttribute,
+  INewAttribute,
   INewDelegateResponse
 } from 'lacpass-identity';
 import { InternalServerError } from 'routing-controllers';
@@ -20,7 +20,7 @@ import fetch from 'node-fetch';
 export class DidServiceLac1 {
   public createDid: () => Promise<DidType>;
   public addNewEthereumAccountIdAttribute: (
-    newAccountIdAttribute: INewAccountIdAttribute
+    newAccountIdAttribute: INewAttribute
   ) => Promise<INewDelegateResponse>;
   log = log4TSProvider.getLogger('IdentityManagerService');
 
@@ -68,7 +68,7 @@ export class DidServiceLac1 {
   }
 
   private async addNewEthereumAccountIdAttributeByLib(
-    newAccountIdAttribute: INewAccountIdAttribute
+    newAccountIdAttribute: INewAttribute
   ): Promise<INewDelegateResponse> {
     return (await this.didService?.addNewEthereumAccountIdAttribute(
       newAccountIdAttribute
@@ -76,7 +76,7 @@ export class DidServiceLac1 {
   }
 
   private async addNewEthereumAccountIdAttributeByExternalService(
-    newAccountIdAttribute: INewAccountIdAttribute
+    newAccountIdAttribute: INewAttribute
   ): Promise<INewDelegateResponse> {
     const result = await fetch(
       `${IDENTITY_MANAGER_BASE_URL}${DID_LAC1_ADD_NEW_ETHEREUM_ACCOUNT_ATTRIBUTE}`,
