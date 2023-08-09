@@ -10,7 +10,7 @@ import {
 } from '@config';
 import {
   IEthereumTransaction,
-  Secp256k1Service,
+  ECService,
   Secp256k1SignTransactionService,
   Secp256k1SignLacchainTransactionService,
   ISignedTransaction,
@@ -28,7 +28,7 @@ export class KeyManagerService {
   public signLacchainTransaction: (
     lacchainTransaction: ILacchainTransaction
   ) => Promise<ISignedTransaction>;
-  private secp256k1Service: Secp256k1Service | null;
+  private secp256k1Service: ECService | null;
   private secp256k1SignTransactionService: Secp256k1SignTransactionService | null;
   // eslint-disable-next-line max-len
   private secp256k1SignLacchainTransactionService: Secp256k1SignLacchainTransactionService | null;

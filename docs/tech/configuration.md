@@ -104,13 +104,13 @@ The following commands will `build and run` a Docker image ready for production 
 #### Build Docker image
 
 ```
-docker build -f Dockerfile.prod -t laccpass-chain-of-trust .
+docker build -f Dockerfile.prod -t lacpass-chain-of-trust .
 ```
 
 #### Run docker image (you need to add .env file as param)
 
 ```
-docker run --rm --env-file=.env.prod -p 3000:3000 --name node-api laccpass-chain-of-trust
+docker run --rm --env-file=.env.prod -p 3000:3000 --name node-api lacpass-chain-of-trust
 ```
 
 ### Fix issue at build docker image (dependencies to install bcrypt are not providede in alpine version of node)

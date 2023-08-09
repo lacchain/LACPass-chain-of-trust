@@ -14,8 +14,8 @@ import {
   log4TSProvider
 } from '@config';
 
-// TODO: import Secp256k1Entity from key-manager
-import { DidEntity, Secp256k1Entity } from 'lacpass-identity';
+// TODO: import ECEntity from key-manager
+import { DidEntity, ECEntity } from 'lacpass-identity';
 
 const log = log4TSProvider.getLogger('ormConfig');
 
@@ -48,7 +48,7 @@ const config: ConnectionOptions = {
 if (IS_COT_DEPENDENT_SERVICE !== 'true') {
   log.info('Importing entities from external components');
   config.entities?.push(DidEntity);
-  config.entities?.push(Secp256k1Entity);
+  config.entities?.push(ECEntity);
 } else {
   log.info('Initializing with local entities');
 }

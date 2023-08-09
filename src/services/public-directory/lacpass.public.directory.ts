@@ -23,7 +23,7 @@ import {
   PublicDirectoryMemberValidator
 } from '../../dto/public.directory/public.directoryDTO';
 
-import { IdentityValidator } from './laccpass.identity.structure';
+import { IdentityValidator } from './lacpass.identity.structure';
 import { IManager } from 'src/interfaces/manager/manager';
 
 @Service()

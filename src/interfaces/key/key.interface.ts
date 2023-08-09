@@ -3,4 +3,5 @@ export interface ISecp256k1 {
   keyId: string;
   address: string;
   publicKey: string;
+  type: string;
 }

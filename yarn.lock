@@ -1629,6 +1629,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/libsodium-wrappers@^0.7.5":
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/@types/libsodium-wrappers/-/libsodium-wrappers-0.7.10.tgz#a6ebde70d3b4af960fd802af8d0e3c7cfe281eb2"
+  integrity sha512-BqI9B92u+cM3ccp8mpHf+HzJ8fBlRwdmyd6+fz3p99m3V6ifT5O3zmOMi612PGkpeFeG/G6loxUnzlDNhfjPSA==
+
 "@types/lodash@^4.14.192":
   version "4.14.192"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.192.tgz#5790406361a2852d332d41635d927f1600811285"
@@ -1843,6 +1848,14 @@
   dependencies:
     "@typescript-eslint/types" "5.58.0"
     eslint-visitor-keys "^3.3.0"
+
+"DIDComm-js@git+https://github.com/decentralized-identity/DIDComm-js.git":
+  version "0.6.0"
+  resolved "git+https://github.com/decentralized-identity/DIDComm-js.git#cfb57b738b5525bcf8bef40aa8fd991633c0a9c1"
+  dependencies:
+    "@types/libsodium-wrappers" "^0.7.5"
+    base-58 "0.0.1"
+    libsodium-wrappers "^0.7.5"
 
 abab@^1.0.0:
   version "1.0.4"
@@ -2316,6 +2329,11 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
+
+base-58@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/base-58/-/base-58-0.0.1.tgz#85d3e70251075661933388f831d1eb8b8f6314e3"
+  integrity sha512-denlKTnozZTVWuh1QkbXf10kkFNc+0/eno29RR+6g5al0yGI+iAOFt/cIA2tvnKoADlUFLZHs50ZdWF+c9WBnw==
 
 base-x@^4.0.0:
   version "4.0.0"
@@ -5767,10 +5785,10 @@ koa@^2.8.2:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-lacpass-identity@^0.0.29:
-  version "0.0.29"
-  resolved "https://registry.yarnpkg.com/lacpass-identity/-/lacpass-identity-0.0.29.tgz#8fb6acc46d2a23fb1aa56755662915cf41a1a072"
-  integrity sha512-HKjdqaLfH1dGUEfrdmfOv3PMUEo3moUqNOPRXI7vWCTal9KU5HgsmvEbxn6qXqEYYGX0KLQ7S9P3SwoRTo/Jhg==
+lacpass-identity@^0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/lacpass-identity/-/lacpass-identity-0.0.30.tgz#22795f84551153ed1411ca3c9f1813c546cca6ad"
+  integrity sha512-SDLuTgsZFYxY+c28g62+/0VmHsBROGZn+O9p12+rTy0iO8LqgIzthPpqGkvdIbf0uilPCMLLt6y/9P4STQ3rCQ==
   dependencies:
     "@lacchain/gas-model-provider" "^1.0.1"
     aws-sdk "^2.1116.0"
@@ -5789,7 +5807,7 @@ lacpass-identity@^0.0.29:
     helmet "^5.0.2"
     json-canonicalize "^1.0.6"
     jsonwebtoken "^9.0.0"
-    lacpass-key-manager "^0.0.19"
+    lacpass-key-manager "^0.0.20"
     morgan "^1.10.0"
     multer "^1.4.4"
     nodemailer "^6.7.3"
@@ -5809,12 +5827,13 @@ lacpass-identity@^0.0.29:
     typescript-logging "^2.1.0"
     typescript-logging-log4ts-style "^2.1.0"
 
-lacpass-key-manager@^0.0.19:
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/lacpass-key-manager/-/lacpass-key-manager-0.0.19.tgz#a481fae8df74fb7224ab43ddcaa928a62afbf90d"
-  integrity sha512-wZEJ1u90jKNxxW6NSrpMOMnizOzq/Bh2HlJlvDk5/j9LCIGpTLIhbdjWGMTkNUHpfDjI860/M9cczyA2ytv2/w==
+lacpass-key-manager@^0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/lacpass-key-manager/-/lacpass-key-manager-0.0.20.tgz#a95ae7060f9056900c89d4b32ffc81297196d33e"
+  integrity sha512-0rsnjycViJS3zsd5JeTAZL4+n0QRCHtVVrOqQHNnPTqYivuTG79bOUMQdRWwed1qmUBhrr3EHYWlR2COBuSBrA==
   dependencies:
     "@lacchain/gas-model-provider" "^1.0.1"
+    DIDComm-js "git+https://github.com/decentralized-identity/DIDComm-js.git"
     aws-sdk "^2.1116.0"
     bcrypt "^5.1.0"
     body-parser "^1.20.0"
@@ -5876,6 +5895,18 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+libsodium-wrappers@^0.7.5:
+  version "0.7.11"
+  resolved "https://registry.yarnpkg.com/libsodium-wrappers/-/libsodium-wrappers-0.7.11.tgz#53bd20606dffcc54ea2122133c7da38218f575f7"
+  integrity sha512-SrcLtXj7BM19vUKtQuyQKiQCRJPgbpauzl3s0rSwD+60wtHqSUuqcoawlMDheCJga85nKOQwxNYQxf/CKAvs6Q==
+  dependencies:
+    libsodium "^0.7.11"
+
+libsodium@^0.7.11:
+  version "0.7.11"
+  resolved "https://registry.yarnpkg.com/libsodium/-/libsodium-0.7.11.tgz#cd10aae7bcc34a300cc6ad0ac88fcca674cfbc2e"
+  integrity sha512-WPfJ7sS53I2s4iM58QxY3Inb83/6mjlYgcmZs7DJsvDlnmVUwNinBCi5vBT43P6bHRy01O4zsMU2CoVR6xJ40A==
 
 lines-and-columns@^1.1.6:
   version "1.1.6"

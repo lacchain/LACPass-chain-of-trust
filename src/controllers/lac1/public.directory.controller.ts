@@ -9,7 +9,7 @@ import {
 } from 'routing-controllers';
 import { Service } from 'typedi';
 // eslint-disable-next-line max-len
-import { LacPassPublicDirectory } from '@services/public-directory/lacpass.public.directory';
+import { LacPassPublicDirectory } from '../../services/public-directory/lacpass.public.directory';
 import { ErrorsMessages } from '../../constants/errorMessages';
 import { IManager } from 'src/interfaces/manager/manager';
 
