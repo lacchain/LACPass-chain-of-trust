@@ -41,7 +41,8 @@ export enum ErrorsMessages {
   UNEXPECTED_RESPONSE_IN_SUCCESSFUL_TRANSACTION_ERROR = 'Transaction was successfully completed but received an unexpected response',
   UNSUPPORTED_DID_METHOD_ERROR = 'Unsupported Did method',
   NOT_CA_CERTIFICATE_ERROR = 'Uploaded file is not a Certificate Authority',
-  X509_EXPIRED_CERTIFICATE = 'Certificate has expired'
+  X509_EXPIRED_CERTIFICATE = 'Certificate has expired',
+  INVALID_COUNTRY_CODE = 'Invalid country code, please check urn:iso:std:iso:3166'
 }
 
 export const Errors = {

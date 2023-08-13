@@ -6,11 +6,14 @@ import {
 } from '../../dto/public.directory/public.directoryDTO';
 import { validateOrReject } from 'class-validator';
 import { BadRequestError } from 'routing-controllers';
+import { CountryCodeValidator } from './country.code.validator';
 
 export class IdentityValidator {
   private didValidator: DidValidator;
+  private countryCodeValidator: CountryCodeValidator;
   constructor() {
     this.didValidator = new DidValidator();
+    this.countryCodeValidator = new CountryCodeValidator();
   }
   async validatePublicDirectoryMember(
     publicDirectoryMemberV: PublicDirectoryMemberValidator
@@ -55,8 +58,10 @@ export class IdentityValidator {
     v.SEED = identificationData.SEED;
     v.SIC = identificationData.SIC;
     v.domainName = identificationData.domainName;
+    v.countryCode = identificationData.countryCode;
     try {
       await validateOrReject(v);
+      this.countryCodeValidator.validate(identificationData.countryCode);
     } catch (err: any) {
       throw new BadRequestError(err);
     }

@@ -8,10 +8,11 @@ This project includes the boilerplate for a basic rest-api made in Node.JS with 
 2. Install `yarn` if not present `curl -o- -L https://yarnpkg.com/install.sh | bash` (macOS and generic Unix environments)
 3. Install required dependencies by `yarn`
 4. `cp .example.env .env.dev`
-5. `cp .example.env.test .env.test`
-6. Create your DB (i.e. psql for Postgres: `psql -U <user> -h <host> -c "create database <db name>;"`) with same name as your .env file.
-7. Run `ENV=[dev, test, prod] yarn db:setup`.
-8. Start your server with `ENV=[dev, prod] yarn dev`.
+5. `cp .example.env .env.prod`
+6. `cp .example.env.test .env.test`
+7. Create your DB (i.e. psql for Postgres: `psql -U <user> -h <host> -c "create database <db name>;"`) with same name as your .env file.
+8. Run `ENV=[dev, test, prod] yarn db:setup`.
+9. Start your server with `ENV=[dev, prod] yarn dev`.
 
 ## Some scripts
 

@@ -42,6 +42,8 @@ export class IdentificationDataValidator {
   @IsOptional()
   @IsString()
   domainName?: string;
+  @IsString()
+  countryCode!: string; // TODO: urn:iso:std:iso:3166
 }
 
 export class MemberDataValidator {
@@ -116,7 +118,6 @@ export class PublicDirectoryMemberDTO {
     }
   })
   expires!: boolean;
-  @IsOptional()
   @IsString()
   chainOfTrustAddress?: string;
   @ValidateNested()
