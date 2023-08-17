@@ -4,7 +4,6 @@ import {
   Member,
   PublicDirectoryMember
 } from 'src/interfaces/publc-directory/member';
-import { encode } from 'cbor';
 import { ethers } from 'ethers';
 import {
   getNodeAddress,
@@ -25,6 +24,7 @@ import {
 
 import { IdentityValidator } from './lacpass.identity.structure';
 import { IManager } from 'src/interfaces/manager/manager';
+import { toUtf8Bytes } from 'ethers/lib/utils';
 
 @Service()
 export class LacPassPublicDirectory {
@@ -111,7 +111,8 @@ export class LacPassPublicDirectory {
     }
     const { memberData, chainOfTrustAddress } = publicDirectoryMember;
     const { id } = memberData?.identificationData;
-    const rawData = encode(memberData);
+    console.log(JSON.stringify(memberData));
+    const rawData = toUtf8Bytes(JSON.stringify(memberData));
     const chainOfTrustAddressToSet = chainOfTrustAddress
       ? chainOfTrustAddress
       : ethers.constants.AddressZero;

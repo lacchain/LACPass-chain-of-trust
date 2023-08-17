@@ -38,19 +38,20 @@ api_url=http://localhost:3002 # Set LACPass Chain of Trust url
 ```
 
 ```sh
-path_to_pulic_cacrt=../certs/SCA/SCA.crt # you should point to the public Certificate Authority pem
-validDays=2
+path_to_public_cacrt=../certs/SCA/SCA.crt # you should point to the public Certificate Authority pem
+validDays=50
 expires=true
 # metadata
-did="did:lac1:1iT6bDHN7nC9yPNuMqtrAPMTE1F9wDJi57G1Q1vL8CfjzuA9rgGdU26oQqV4GhdoLWtu" # New member's DID
-legalName="Ministry Of Country ABC"
-identificationData='{"id":'\"$did\"',"legalName":'\"$legalName\"'}'
-# memberData='{"identificationData":'$identificationData'}'
+did="did:lac1:1iT6WTvr3j9P7hZwWcvmbGgJrdYuih1Qq5rmGPfqihbkasuY4o4diYhMaJdfUe3ZbrX4"  #"did:lac1:1iT673WyP84WsfUw4whuDR6oeZxrFGGeNUVYNXpzs7XiMJs4zo5NtvJ3KmfkyeFW4Ne7" # New member's DID
+legalName="Ministry Of Country CL"
+countryCode="CHL" #urn:iso:std:iso:3166
+url="https://lacnet.lacchain.net"
+identificationData='{"id":'\"$did\"',"legalName":'\"$legalName\"',"countryCode": '\"$countryCode\"', "url": '\"$url\"'}'
 
 # process
 add_member_to_public_directory_url="$api_url"/api/v1/public-directory/add-member
 data='{"validDays":'$validDays', "expires":'$expires',"identificationData":'$identificationData'}'
-curl -X 'POST' ${add_member_to_public_directory_url} -H 'accept: application/json' -F caCert=@$path_to_pulic_cacrt -F data=$data
+curl -X 'POST' ${add_member_to_public_directory_url} -H 'accept: application/json' -F caCert=@$path_to_public_cacrt -F data=$data
 ```
 
 #### Onboarding the member into the Chain of Trust
