@@ -42,11 +42,11 @@ path_to_public_cacrt=../certs/SCA/SCA.crt # you should point to the public Certi
 validDays=50
 expires=true
 # metadata
-did="did:lac1:1iT6Rm2E3Cs6otAc5Ec98Lxi6cJU4Vvxpgs17PzqX9UtoxY6R5CLog6TgH4RvdBxfSbT"  #"did:lac1:1iT673WyP84WsfUw4whuDR6oeZxrFGGeNUVYNXpzs7XiMJs4zo5NtvJ3KmfkyeFW4Ne7" # New member's DID
-legalName="Ministry Of Country ABC"
-countryCode="PER" #urn:iso:std:iso:3166
-identificationData='{"id":'\"$did\"',"legalName":'\"$legalName\"',"countryCode": '\"$countryCode\"'}'
-# memberData='{"identificationData":'$identificationData'}'
+did="did:lac1:1iT6WTvr3j9P7hZwWcvmbGgJrdYuih1Qq5rmGPfqihbkasuY4o4diYhMaJdfUe3ZbrX4"  #"did:lac1:1iT673WyP84WsfUw4whuDR6oeZxrFGGeNUVYNXpzs7XiMJs4zo5NtvJ3KmfkyeFW4Ne7" # New member's DID
+legalName="Ministry Of Country CL"
+countryCode="CHL" #urn:iso:std:iso:3166
+url="https://lacnet.lacchain.net"
+identificationData='{"id":'\"$did\"',"legalName":'\"$legalName\"',"countryCode": '\"$countryCode\"', "url": '\"$url\"'}'
 
 # process
 add_member_to_public_directory_url="$api_url"/api/v1/public-directory/add-member
