@@ -59,6 +59,7 @@ export class IdentityValidator {
     v.SIC = identificationData.SIC;
     v.domainName = identificationData.domainName;
     v.countryCode = identificationData.countryCode;
+    v.url = identificationData.url;
     try {
       await validateOrReject(v);
       this.countryCodeValidator.validate(identificationData.countryCode);

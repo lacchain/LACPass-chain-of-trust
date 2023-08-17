@@ -44,6 +44,8 @@ export class IdentificationDataValidator {
   domainName?: string;
   @IsString()
   countryCode!: string; // TODO: urn:iso:std:iso:3166
+  @IsString()
+  url!: string;
 }
 
 export class MemberDataValidator {

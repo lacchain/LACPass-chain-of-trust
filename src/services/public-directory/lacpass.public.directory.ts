@@ -31,7 +31,7 @@ export class LacPassPublicDirectory {
   publicDirectory: PublicDirectory;
   private manager: ManagerService;
   private identityValidator: IdentityValidator;
-  private memberDataEncodingVersion = '1.0.1';
+  private memberDataEncodingVersion = '1.0.0';
   constructor() {
     this.publicDirectory = new PublicDirectory(
       resolvePublicDirectoryAddress(),
