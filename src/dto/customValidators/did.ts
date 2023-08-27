@@ -3,7 +3,7 @@ import {
   ValidatorConstraintInterface,
   ValidationArguments
 } from 'class-validator';
-import { DidLac1Service } from 'lacpass-identity';
+import { DidLac1Service } from 'lacchain-identity';
 
 @ValidatorConstraint({ name: 'didValidator', async: false })
 export class DidValidator implements ValidatorConstraintInterface {

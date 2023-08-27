@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { DidLac1Service } from 'lacpass-identity';
+import { DidLac1Service } from 'lacchain-identity';
 import { BadRequestError } from 'routing-controllers';
 import { ErrorsMessages } from '../../constants/errorMessages';
 

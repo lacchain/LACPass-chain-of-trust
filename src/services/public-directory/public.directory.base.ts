@@ -12,10 +12,10 @@ import {
 import { BadRequestError } from 'routing-controllers';
 import { ErrorsMessages } from '@constants/errorMessages';
 
-export class PublicDirectory {
+export class PublicDirectoryBase {
   private publicDirectory: ethers.Contract;
   private readonly lacchainLib: LacchainLib;
-  log = log4TSProvider.getLogger('PublicDirectoryIterface');
+  log = log4TSProvider.getLogger('PublicDirectoryBaseInterface');
   constructor(
     publicDirectoryAddress: string,
     rpcUrl: string,

@@ -15,7 +15,7 @@ import {
   Secp256k1SignLacchainTransactionService,
   ISignedTransaction,
   ILacchainTransaction
-} from 'lacpass-key-manager';
+} from 'lacchain-key-manager';
 import { InternalServerError } from 'routing-controllers';
 import { ErrorsMessages } from '../../constants/errorMessages';
 import { ISecp256k1 } from 'src/interfaces/key/key.interface';
@@ -37,17 +37,17 @@ export class KeyManagerService {
     if (IS_COT_DEPENDENT_SERVICE !== 'true') {
       this.log.info('Configuring key-manager library usage');
       this.createSecp256k1Key = this.createSecp256k1KeyByLib;
-      const S = require('lacpass-key-manager').Secp256k1DbService;
+      const S = require('lacchain-key-manager').Secp256k1DbService;
       this.secp256k1Service = new S();
 
       this.signEthereumTransaction = this.signEthereumTransactionByLib;
       const T =
-        require('lacpass-key-manager').Secp256k1SignTransactionServiceDb;
+        require('lacchain-key-manager').Secp256k1SignTransactionServiceDb;
       this.secp256k1SignTransactionService = new T();
 
       this.signLacchainTransaction = this.signLacchainTransactionByLib;
       const R =
-        require('lacpass-key-manager').Secp256k1SignLacchainTransactionServiceDb;
+        require('lacchain-key-manager').Secp256k1SignLacchainTransactionServiceDb;
       this.secp256k1SignLacchainTransactionService = new R();
     } else {
       this.log.info('Configuring key-manager external service connection');

@@ -1,7 +1,7 @@
 import { log4TSProvider } from '@config';
 import { GasModelProvider, GasModelSigner } from '@lacchain/gas-model-provider';
 import { Wallet, ethers } from 'ethers';
-import { LacchainLib } from 'lacpass-identity';
+import { LacchainLib } from 'lacchain-identity';
 import { Service } from 'typedi';
 import { Logger } from 'typescript-logging-log4ts-style';
 

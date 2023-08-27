@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { PublicDirectory } from './public.directory';
+import { PublicDirectoryBase } from './public.directory.base';
 import {
   Member,
   PublicDirectoryMember
@@ -22,18 +22,18 @@ import {
   PublicDirectoryMemberValidator
 } from '../../dto/public.directory/public.directoryDTO';
 
-import { IdentityValidator } from './lacpass.identity.structure';
+import { IdentityValidator } from './lacchain.identity.structure';
 import { IManager } from 'src/interfaces/manager/manager';
 import { toUtf8Bytes } from 'ethers/lib/utils';
 
 @Service()
-export class LacPassPublicDirectory {
-  publicDirectory: PublicDirectory;
+export class LacchainPublicDirectory {
+  publicDirectory: PublicDirectoryBase;
   private manager: ManagerService;
   private identityValidator: IdentityValidator;
   private memberDataEncodingVersion = '1.0.0';
   constructor() {
-    this.publicDirectory = new PublicDirectory(
+    this.publicDirectory = new PublicDirectoryBase(
       resolvePublicDirectoryAddress(),
       getRpcUrl(),
       getNodeAddress()

@@ -11,7 +11,7 @@ import {
   DidType,
   INewAttribute,
   INewDelegateResponse
-} from 'lacpass-identity';
+} from 'lacchain-identity';
 import { InternalServerError } from 'routing-controllers';
 import { Service } from 'typedi';
 import fetch from 'node-fetch';
@@ -34,7 +34,7 @@ export class DidServiceLac1 {
         this.addNewEthereumAccountIdAttributeByLib;
 
       // setting imported did service
-      const S = require('lacpass-identity').DidLac1Service;
+      const S = require('lacchain-identity').DidLac1Service;
       this.didService = new S();
     } else {
       this.log.info('Configuring external service connection');

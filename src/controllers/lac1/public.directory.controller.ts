@@ -9,14 +9,14 @@ import {
 } from 'routing-controllers';
 import { Service } from 'typedi';
 // eslint-disable-next-line max-len
-import { LacPassPublicDirectory } from '../../services/public-directory/lacpass.public.directory';
+import { LacchainPublicDirectory } from '../../services/public-directory/lacchain.public.directory';
 import { ErrorsMessages } from '../../constants/errorMessages';
 import { IManager } from 'src/interfaces/manager/manager';
 
 @JsonController('/public-directory')
 @Service()
 export class PublicDirectoryController {
-  constructor(private readonly publicDirectory: LacPassPublicDirectory) {}
+  constructor(private readonly publicDirectory: LacchainPublicDirectory) {}
 
   @Post('/add-member')
   async addMember(

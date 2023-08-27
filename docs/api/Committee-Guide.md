@@ -12,7 +12,7 @@ This file contains the necessary steps for the committee to:
     * NOTE: if public direcctory has a multisignature owner scheme then this api will not have a method to allow interacting with the public directory.
     * You can verify you have privileges for the Public Directory Smart Contract by checking against the public directory api method, that will return a 200 status code otherwise will throw an exception.
     ```sh
-    api_url=http://localhost:3002 # Set LACPass Chain of Trust url
+    api_url=http://localhost:3002 # Set LACChain Trust url
     get_public_directory_manager="$api_url/api/v1/public-directory/get-manager"
     curl -X 'GET' \
     $get_public_directory_manager \
@@ -34,7 +34,7 @@ This file contains the necessary steps for the committee to:
     3. New Member's Metadata
 
 ```sh
-api_url=http://localhost:3002 # Set LACPass Chain of Trust url
+api_url=http://localhost:3002 # Set LACChain Trust url
 ```
 
 ```sh

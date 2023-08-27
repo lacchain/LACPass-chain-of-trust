@@ -15,7 +15,7 @@ To interact with this API you can just enter the Swagger exposed in: http://<HOS
 Or via Command-Line Interface:
 
 ```sh
-api_url=http://localhost:3002 # Set LACPass Chain of Trust url
+api_url=http://localhost:3002 # Set LACChain Trust url
 manager_url="$api_url"/api/v1/manager
 ```
 

@@ -11,12 +11,12 @@ import { Service } from 'typedi';
 import { ErrorsMessages } from '../../constants/errorMessages';
 import { IManager } from 'src/interfaces/manager/manager';
 import { ChainOfTrustMember } from '@dto/chain-of-trust/chainOfTrustDTO';
-import { LacpassChainOfTrust } from '@services/chain-of-trust/lacpass.chain.of.trust';
+import { ChainOfTrust } from '@services/chain-of-trust/chain.of.trust';
 
 @JsonController('/chain-of-trust')
 @Service()
 export class ChainOfTrustController {
-  constructor(private readonly chainOfTrust: LacpassChainOfTrust) {}
+  constructor(private readonly chainOfTrust: ChainOfTrust) {}
 
   @Post('/add-or-update-member')
   async addOrUpdateMember(

@@ -15,7 +15,7 @@ import {
 } from '@config';
 
 // TODO: import ECEntity from key-manager
-import { DidEntity, ECEntity } from 'lacpass-identity';
+import { DidEntity, ECEntity } from 'lacchain-identity';
 
 const log = log4TSProvider.getLogger('ormConfig');
 

@@ -5,7 +5,7 @@ import {
 } from 'src/interfaces/manager/manager';
 import { Service } from 'typedi';
 import { DidServiceLac1 } from './external/did-lac/did.service';
-import { INewAttribute } from 'lacpass-identity';
+import { INewAttribute } from 'lacchain-identity';
 import { getRepository } from 'typeorm';
 import { Manager } from '../entities/manager.entity';
 import { BadRequestError, NotFoundError } from 'routing-controllers';

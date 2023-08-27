@@ -1,100 +1,86 @@
-import { Interface } from 'ethers/lib/utils';
-import { CHAIN_OF_TRUST_ABI } from '../../constants/lacchain/chain.of.trust.abi';
-import { LacchainBaseContract } from '@services/base.contract';
-import { IEthereumTransactionResponse, ITransaction } from 'lacpass-identity';
+import { Service } from 'typedi';
+import { ChainOfTrustBase } from './chain.of.trust.base';
+import {
+  getNodeAddress,
+  getRpcUrl,
+  log4TSProvider,
+  resolveChainOfTrustAddress
+} from '../../config';
+import { ManagerService } from '../manager';
 import {
   ChainOfTrustMember,
-  ChainOfTrustMemberDetails
+  ChainOfTrustMemberDetails,
+  IChainOfTrustMember
 } from 'src/interfaces/chain-of-trust/chain.of.trust';
-import { Service } from 'typedi';
-import { ethers } from 'ethers';
-import { BadRequestError } from 'routing-controllers';
+import { IManager } from 'src/interfaces/manager/manager';
+import { BadRequestError, InternalServerError } from 'routing-controllers';
 import { ErrorsMessages } from '../../constants/errorMessages';
+import { IEthereumTransactionResponse } from 'src/interfaces/ethereum/transaction';
+import { Logger } from 'typescript-logging-log4ts-style';
 
 @Service()
-export class ChainOfTrust extends LacchainBaseContract {
-  constructor(contractAddress: string, rpcUrl: string, nodeAddress: string) {
-    super(
-      contractAddress,
+export class ChainOfTrust {
+  private readonly chainOfTrust: ChainOfTrustBase;
+  private manager: ManagerService;
+  protected log: Logger;
+  constructor() {
+    this.log = log4TSProvider.getLogger('ChainOfTrustService');
+    const chainOfTrustAddress = resolveChainOfTrustAddress();
+    const rpcUrl = getRpcUrl();
+    const nodeAddress = getNodeAddress();
+    this.chainOfTrust = new ChainOfTrustBase(
+      chainOfTrustAddress,
       rpcUrl,
-      nodeAddress,
-      CHAIN_OF_TRUST_ABI,
-      'ChainOfTrustContractInterface'
+      nodeAddress
+    );
+    this.manager = new ManagerService();
+  }
+  async addOrUpdateMember(
+    member: IChainOfTrustMember
+  ): Promise<IEthereumTransactionResponse> {
+    const addOrUpdatemember: ChainOfTrustMember = {
+      memberEntity: member.memberEntityAddress,
+      did: member.entityDid,
+      period: member.validDays * 86400
+    };
+    const managerAddress = (await this.getManager()).managerAddress;
+    const foundMember = await this.getMember(member.memberEntityAddress);
+    if (foundMember.isValid) {
+      this.log.info(
+        'Member already exists, will expire in',
+        new Date(foundMember.exp * 1000),
+        ' updating anyways ...'
+      );
+    }
+    return this.chainOfTrust.addOrUpdateMember(
+      addOrUpdatemember,
+      managerAddress
     );
   }
 
-  async getMember(memberEntityManager: string): Promise<any> {
-    return this.contractInstance.group(memberEntityManager);
-  }
-
-  async getMemberDetailsByEntityManager(
+  async getMember(
     memberEntityManager: string
   ): Promise<ChainOfTrustMemberDetails> {
-    const member = await this.contractInstance.getMemberDetailsByEntityManager(
+    return this.chainOfTrust.getMemberDetailsByEntityManager(
       memberEntityManager
     );
-    const iat = parseInt(ethers.utils.formatUnits(member[0], 0));
-    const exp = parseInt(ethers.utils.formatUnits(member[1], 0));
-    const gId = parseInt(ethers.utils.formatUnits(member[2], 0));
-    const trustedBy = member[3];
-    const did = member[4];
-    const isValid = member[5];
-    const isRoot = gId == 1;
-    return {
-      iat,
-      exp,
-      gId,
-      trustedBy,
-      did,
-      isValid,
-      isRoot
-    } as ChainOfTrustMemberDetails;
   }
-
-  async owner(): Promise<string> {
-    return this.contractInstance.owner();
-  }
-
-  async manager(gId: string): Promise<string> {
-    return this.contractInstance.manager(gId);
-  }
-
-  async addOrUpdateMember(
-    member: ChainOfTrustMember,
-    managerAddress: string
-  ): Promise<IEthereumTransactionResponse> {
-    const methodName = 'addOrUpdateGroupMember';
-    const methodSignature = [
-      `function ${methodName}(address memberEntity, string did, uint256 period) external`
-    ];
-    const methodInterface = new Interface(methodSignature);
-    const encodedData = methodInterface.encodeFunctionData(methodName, [
-      member.memberEntity,
-      member.did,
-      member.period
-    ]);
-    const tx: ITransaction = {
-      from: managerAddress,
-      to: this.contractInstance.address,
-      data: encodedData
-    };
-    const txResponse = await this.lacchainLib.signAndSend(tx);
-    const receipt = await this.contractInstance.provider.getTransactionReceipt(
-      txResponse.txHash
-    );
-    const iFace = new ethers.utils.Interface(CHAIN_OF_TRUST_ABI);
-    for (const log of receipt.logs) {
-      if (log.address == this.contractInstance.address) {
-        const parsed = iFace.parseLog(log);
-        if (parsed.name == 'GroupMemberChanged') {
-          return txResponse;
-        }
+  async getManager(): Promise<IManager> {
+    const gId = '1';
+    const rootManager = await this.chainOfTrust.manager(gId);
+    try {
+      const found = await this.manager.findManager(rootManager);
+      if (found) {
+        return found;
       }
+    } catch (error: any) {
+      if (error.detail ?? error.message) {
+        throw new BadRequestError(ErrorsMessages.MANAGER_PRIVILEGE_ERROR);
+      }
+      throw new InternalServerError(
+        error.detail ?? error.message ?? ErrorsMessages.INTERNAL_SERVER_ERROR
+      );
     }
-    // eslint-disable-next-line max-len
-    // TODO: root manager cannot be transferred on contract deployment so transcations keeps failing
-    throw new BadRequestError(
-      ErrorsMessages.UNEXPECTED_RESPONSE_IN_SUCCESSFUL_TRANSACTION_ERROR
-    ); // may happen if contract is updated where event structures are changed
+    throw new BadRequestError(ErrorsMessages.MANAGER_PRIVILEGE_ERROR);
   }
 }
