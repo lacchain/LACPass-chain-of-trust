@@ -1,8 +1,14 @@
-export interface PublicDirectoryMember {
+export interface Type1PublicDirectoryMember {
   validDays?: number;
   expires: boolean;
   chainOfTrustAddress?: string;
-  memberData: MemberData;
+  memberData: Type1MemberData;
+}
+export interface Type2PublicDirectoryMember {
+  validDays?: number;
+  expires: boolean;
+  chainOfTrustAddress?: string;
+  memberData: Type2MemberData;
 }
 
 export interface Member {
@@ -17,7 +23,7 @@ export interface Member {
 // EBSI: https://ec.europa.eu/digital-building-blocks/code/projects/EBSI/repos/json-schema/browse/schemas/ebsi-vid/legal-entity/2022-11/schema.json
 // eslint-disable-next-line max-len
 // https://ec.europa.eu/digital-building-blocks/code/projects/EBSI/repos/json-schema/browse/schemas/ebsi-vid/legal-entity/2022-11/examples/organizationVerifiableAttestation_example.json
-export interface IdentificationData {
+export interface Base1IdentificationData {
   id: string;
   legalName: string;
   legalPersonIdentifier?: string;
@@ -31,8 +37,20 @@ export interface IdentificationData {
   domainName?: string;
 }
 
-export interface MemberData {
+export interface Base2IdentificationData extends Base1IdentificationData {
+  countryCode: string; // TODO: urn:iso:std:iso:3166
+  url: string;
+}
+
+export interface Type1MemberData {
   version: string;
-  identificationData: IdentificationData;
+  type: string;
+  identificationData: Base1IdentificationData;
+}
+
+export interface Type2MemberData {
+  version: string;
+  type: string;
+  identificationData: Base2IdentificationData;
   certificateAuthority: string;
 }
