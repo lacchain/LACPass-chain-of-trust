@@ -25,7 +25,36 @@ This file contains the necessary steps for the committee to:
 
 ### Onboarding a new member
 
-#### Onboarding the member into the Public Directory
+#### Onboarding a Type-1 member into the Public Directory
+
+##### requirements
+* You must have:
+    1. The DID (Decentralized Identifier)
+    2. New Member's Metadata
+
+```sh
+api_url=http://localhost:3002 # Set LACChain Trust url
+```
+
+```sh
+validDays=500
+expires=true
+# metadata
+did="did:lac1:1iT5Bd7Df76GVtsWfHEQpCE6461Coy1e9ijvWHMAxoVaBm7vpXTJWyPZzoeMsnUyth5V"
+legalName="Acme Corp"
+domainName="example.com" # optional
+identificationData='{"id":'\"$did\"',"legalName":'\"$legalName\"',"domainName": '\"$domainName\"'}'
+
+# process
+add_type1_member_to_public_directory_url="$api_url"/api/v1/public-directory/add-type1-member
+data='{"validDays":'$validDays', "expires":'$expires',"identificationData":'$identificationData'}'
+curl -X 'POST' ${add_type1_member_to_public_directory_url} -H 'accept: application/json' \
+-H 'Content-Type: application/json' \
+-d "$data"
+```
+
+
+#### Onboarding a Type-2 member into the Public Directory
 
 ##### requirements
 * You must have:
@@ -54,7 +83,7 @@ data='{"validDays":'$validDays', "expires":'$expires',"identificationData":'$ide
 curl -X 'POST' ${add_member_to_public_directory_url} -H 'accept: application/json' -F caCert=@$path_to_public_cacrt -F data=$data
 ```
 
-#### Onboarding the member into the Chain of Trust
+#### Onboarding a member into the Chain of Trust
 
 
 ```sh

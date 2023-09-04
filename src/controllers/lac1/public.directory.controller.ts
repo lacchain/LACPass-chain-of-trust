@@ -56,7 +56,7 @@ export class PublicDirectoryController {
    * @param {Express.Multer.File} caCert - Certificate Authority file
    */
   @Post('/add-type2-member')
-  async addMember(
+  async addType2Member(
     @Body({ validate: true }) data: any,
     @UploadedFile('caCert') caCert: Express.Multer.File
   ): Promise<any> {
