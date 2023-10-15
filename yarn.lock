@@ -5785,10 +5785,10 @@ koa@^2.8.2:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-lacchain-identity@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/lacchain-identity/-/lacchain-identity-0.0.6.tgz#9f59a4a35d06d3c9a316dacd9606e09ae6c4837c"
-  integrity sha512-p250BxYpxe3/6CFGbicvAgOBkLLyl2XeImCmH869xpgZST4a45G35JkAc2z1nHAYIDfvPmnpsJqJsow5rYuzwg==
+lacchain-identity@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/lacchain-identity/-/lacchain-identity-0.0.7.tgz#93b6f9bd7508070100347467278dbc3a76021ce4"
+  integrity sha512-zKorOuVV6Dip3LrLz0o8CVYsUuY2qDyYln7keG9AdaD5T8AidjSNzaVuh299oV4a66dGomSxV0jlGOVCw/qcRw==
   dependencies:
     "@lacchain/gas-model-provider" "^1.0.1"
     aws-sdk "^2.1116.0"
