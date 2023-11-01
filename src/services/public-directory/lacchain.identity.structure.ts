@@ -5,7 +5,9 @@ import {
   Base2IdentificationDataValidator,
   PublicDirectoryType1MemberValidator,
   Type1MemberDataValidator,
-  Base1IdentificationDataValidator
+  Base1IdentificationDataValidator,
+  PublicDirectoryType3MemberValidator,
+  Type3MemberDataValidator
 } from '../../dto/public.directory/public.directoryDTO';
 import { validateOrReject } from 'class-validator';
 import { BadRequestError } from 'routing-controllers';
@@ -48,6 +50,21 @@ export class IdentityValidator {
     }
   }
 
+  async validateType3PublicDirectoryMember(
+    publicDirectoryMemberV: PublicDirectoryType3MemberValidator
+  ) {
+    const v = new PublicDirectoryType3MemberValidator();
+    v.validDays = publicDirectoryMemberV.validDays;
+    v.expires = publicDirectoryMemberV.expires;
+    v.chainOfTrustAddress = publicDirectoryMemberV.chainOfTrustAddress;
+    v.memberData = publicDirectoryMemberV.memberData;
+    try {
+      await validateOrReject(v);
+    } catch (err: any) {
+      throw new BadRequestError(err);
+    }
+  }
+
   async validateType1MemberData(memberData: Type1MemberDataValidator) {
     const v = new Type1MemberDataValidator();
     v.type = memberData.type;
@@ -64,6 +81,18 @@ export class IdentityValidator {
     const v = new Type2MemberDataValidator();
     v.type = memberData.type;
     v.certificateAuthority = memberData.certificateAuthority;
+    v.version = memberData.version;
+    v.identificationData = memberData.identificationData;
+    try {
+      await validateOrReject(v);
+    } catch (err: any) {
+      throw new BadRequestError(err);
+    }
+  }
+
+  async validateType3MemberData(memberData: Type3MemberDataValidator) {
+    const v = new Type3MemberDataValidator();
+    v.type = memberData.type;
     v.version = memberData.version;
     v.identificationData = memberData.identificationData;
     try {

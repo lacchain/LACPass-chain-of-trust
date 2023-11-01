@@ -23,7 +23,10 @@ import {
   PublicDirectoryType2MemberValidator,
   Type1MemberDataValidator,
   PublicDirectoryType1MemberDTO,
-  PublicDirectoryType1MemberValidator
+  PublicDirectoryType1MemberValidator,
+  PublicDirectoryType3MemberDTO,
+  Type3MemberDataValidator,
+  PublicDirectoryType3MemberValidator
 } from '../../dto/public.directory/public.directoryDTO';
 
 import { IdentityValidator } from './lacchain.identity.structure';
@@ -39,6 +42,8 @@ export class LacchainPublicDirectory {
   private memberDataType1Name = 'Type-1';
   private memberDataType2EncodingVersion = '1.0.0';
   private memberDataType2Name = 'Type-2';
+  private memberDataType3EncodingVersion = '1.0.0';
+  private memberDataType3Name = 'Type-3';
   constructor() {
     this.publicDirectory = new PublicDirectoryBase(
       resolvePublicDirectoryAddress(),
@@ -63,8 +68,6 @@ export class LacchainPublicDirectory {
     }
     await this._type1ValidateAndFillAdditionalParams(publicDirectoryMember);
     return this.addMember(publicDirectoryMember);
-
-    // return { Ok: true };
   }
 
   async rawAddType2Member(
@@ -99,6 +102,23 @@ export class LacchainPublicDirectory {
     await this._type2ValidateAndFillAdditionalParams(publicDirectoryMember);
     return this.addMember(publicDirectoryMember);
   }
+
+  async addType3Member(type3Data: PublicDirectoryType3MemberDTO): Promise<any> {
+    const memberData = new Type3MemberDataValidator();
+    memberData.identificationData = type3Data.identificationData;
+    const publicDirectoryMember = new PublicDirectoryType3MemberValidator();
+    publicDirectoryMember.validDays = type3Data.validDays;
+    publicDirectoryMember.expires = type3Data.expires;
+    publicDirectoryMember.chainOfTrustAddress = type3Data.chainOfTrustAddress;
+    publicDirectoryMember.memberData = memberData;
+
+    if (!publicDirectoryMember.memberData) {
+      throw new BadRequestError(ErrorsMessages.BAD_REQUEST_ERROR);
+    }
+    await this._type3ValidateAndFillAdditionalParams(publicDirectoryMember);
+    return this.addMember(publicDirectoryMember);
+  }
+
   private _validatex509Cert(x509CA: X509Certificate) {
     if (!x509CA.ca) {
       throw new BadRequestError(ErrorsMessages.NOT_CA_CERTIFICATE_ERROR);
@@ -142,6 +162,25 @@ export class LacchainPublicDirectory {
       publicDirectoryMemberV
     );
     await this.identityValidator.validateType2MemberData(
+      publicDirectoryMemberV.memberData
+    );
+    await this.identityValidator.validateBase2IdentificationData(
+      publicDirectoryMemberV.memberData.identificationData
+    );
+  }
+
+  private async _type3ValidateAndFillAdditionalParams(
+    publicDirectoryMemberV: PublicDirectoryType3MemberValidator
+  ) {
+    if (publicDirectoryMemberV.memberData) {
+      publicDirectoryMemberV.memberData.version =
+        this.memberDataType3EncodingVersion;
+      publicDirectoryMemberV.memberData.type = this.memberDataType3Name;
+    }
+    await this.identityValidator.validateType3PublicDirectoryMember(
+      publicDirectoryMemberV
+    );
+    await this.identityValidator.validateType3MemberData(
       publicDirectoryMemberV.memberData
     );
     await this.identityValidator.validateBase2IdentificationData(
