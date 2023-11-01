@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.8
+
+* Adds 'Type-3' data for Public Directory
+
 ## 0.0.1
 
 ### Additions and Improvements

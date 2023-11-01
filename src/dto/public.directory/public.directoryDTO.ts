@@ -74,6 +74,13 @@ export class Type2MemberDataValidator extends BaseTypeMemberDataValidator {
   certificateAuthority!: string;
 }
 
+export class Type3MemberDataValidator extends BaseTypeMemberDataValidator {
+  @ValidateNested()
+  @IsDefined()
+  @Type(() => Base2IdentificationDataValidator)
+  identificationData!: Base2IdentificationDataValidator;
+}
+
 export class Base1PublicDirectoryMemberValidator {
   @Min(1)
   @IsPositive({
@@ -118,6 +125,13 @@ export class PublicDirectoryType2MemberDTO extends Base1PublicDirectoryMemberVal
   identificationData!: Base2IdentificationDataValidator;
 }
 
+export class PublicDirectoryType3MemberDTO extends Base1PublicDirectoryMemberValidator {
+  @ValidateNested()
+  @IsDefined()
+  @Type(() => Base2IdentificationDataValidator)
+  identificationData!: Base2IdentificationDataValidator;
+}
+
 // eslint-disable-next-line max-len
 export class PublicDirectoryType1MemberValidator extends Base1PublicDirectoryMemberValidator {
   @ValidateNested()
@@ -132,4 +146,12 @@ export class PublicDirectoryType2MemberValidator extends Base1PublicDirectoryMem
   @IsDefined()
   @Type(() => Type2MemberDataValidator)
   memberData!: Type2MemberDataValidator;
+}
+
+// eslint-disable-next-line max-len
+export class PublicDirectoryType3MemberValidator extends Base1PublicDirectoryMemberValidator {
+  @ValidateNested()
+  @IsDefined()
+  @Type(() => Type3MemberDataValidator)
+  memberData!: Type3MemberDataValidator;
 }
