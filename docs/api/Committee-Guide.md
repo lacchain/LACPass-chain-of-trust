@@ -111,33 +111,6 @@ curl -X 'POST' ${add_type3_member_to_public_directory_url} -H 'accept: applicati
 -d "$data"
 ```
 
-##### requirements
-* You must have:
-    1. The Certificate Authority
-    2. The DID (Decentralized Identifier)
-    3. New Member's Metadata
-
-```sh
-api_url=http://localhost:3002 # Set LACChain Trust url
-```
-
-```sh
-path_to_public_cacrt=../certs/SCA/SCA.crt # you should point to the public Certificate Authority pem
-validDays=500
-expires=true
-# metadata
-did="did:lac1:1iT58jc7tEP4Y8zbf9Ma8dpdiGKZjzYmjtmFEZZ8Dias9rbBpAYS39dAekAZupNDdgGb"
-legalName="Ministry Of Country CL"
-countryCode="CHL" #urn:iso:std:iso:3166
-url="https://lacnet.lacchain.net"
-identificationData='{"id":'\"$did\"',"legalName":'\"$legalName\"',"countryCode": '\"$countryCode\"', "url": '\"$url\"'}'
-
-# process
-add_member_to_public_directory_url="$api_url"/api/v1/public-directory/add-type2-member
-data='{"validDays":'$validDays', "expires":'$expires',"identificationData":'$identificationData'}'
-curl -X 'POST' ${add_member_to_public_directory_url} -H 'accept: application/json' -F caCert=@$path_to_public_cacrt -F data=$data
-```
-
 #### Onboarding a member into the Chain of Trust
 
 
